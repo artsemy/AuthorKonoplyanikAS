@@ -1,7 +1,6 @@
 package by.training.epam.service;
 
-import java.util.Map;
-
+import by.training.epam.bean.User;
 import by.training.epam.dao.DAOException;
 import by.training.epam.dao.DAOFactory;
 import by.training.epam.dao.UserDAO;
@@ -9,32 +8,34 @@ import by.training.epam.dao.UserDAO;
 public class UserServiceImpl implements UserService{
 	
 	@Override
-	public void createUser(String name, String pass) throws ServiceException {
+	public boolean createUser(String name, String pass) throws ServiceException {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
-			Map<String, String> map = userDAO.getUsers();
-			if (map.containsKey(name)) {
-				throw new ServiceException("can't use this login");
+			User user = userDAO.readUser(name);
+			if (user != null) {
+				return false;
 			}
 			userDAO.createUser(name, pass);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
+		return true;
 	}
 
 	@Override
-	public void readUser(String name, String pass) throws ServiceException {
+	public boolean readUser(String name, String pass) throws ServiceException {
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
-			Map<String, String> map = userDAO.getUsers();
-			if (!map.containsKey(name) || !pass.equals(map.get(name))) {
-				throw new ServiceException("bad login or password");
+			User user = userDAO.readUser(name);
+			if (user == null || !pass.equals(user.getPassword())) {
+				return false;
 			}
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
+		return true;
 	}
 	
 }

@@ -11,9 +11,9 @@
 		<input type="hidden" name="command" value="naming" /> Введите имя:<br />
 		<input type="text" name="name" value="" /><br /> Введите пароль:<br />
 		<input type="text" name="pass" value="" /><br />
-		<input type="submit" name="log_in" value="Регистрация" /><br />
-		<input type="submit" name="sing_in" value="Вход" />
-		<input type="submit" name="sing_out" value="Выход" />
+		<input type="submit" name="sign_up" value="Регистрация" /><br />
+		<input type="submit" name="sign_in" value="Вход" />
+		<input type="submit" name="sign_out" value="Выход" />
 		<br />
 	</form>
 </body>
