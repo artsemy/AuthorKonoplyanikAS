@@ -10,5 +10,10 @@
 <body>
     <c:out value="${requestScope.result}" />
 	<c:out value="${sessionScope.name}" />
+	<p>
+		<c:forEach items="${requestScope.array}" var="element">
+			<c:out value="${element}"/> <br />
+		</c:forEach>
+	</p>
 </body>
 </html>
