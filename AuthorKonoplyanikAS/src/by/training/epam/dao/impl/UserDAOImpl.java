@@ -1,4 +1,4 @@
-package by.training.epam.dao;
+package by.training.epam.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,23 +7,29 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import by.training.epam.bean.User;
+import by.training.epam.dao.DAOException;
+import by.training.epam.dao.UserDAO;
 import by.training.epam.dao.connectionpool.ConnectionPool;
 import by.training.epam.dao.connectionpool.ConnectionPoolException;
 
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserDAO {
+	
+	private static final String READ_USER = "select * from user where login = ? and password = ?";
+	private static final String CREATE_USER = "insert into user values(?, ?, ?, ?, ?)";
 	
 	@Override
-	public User readUser(String name) throws DAOException {
-		User user = null;
+	public User readUser(User user) throws DAOException {
+		User resultUser = null;
 		try {
 			ConnectionPool connectionPool = ConnectionPool.getInstance();
 			Connection connection = connectionPool.takeConnection();
-			String req = "select * from user where name = ?"; 
-			PreparedStatement statement = connection.prepareStatement(req);
-			statement.setString(1, name);
+			PreparedStatement statement = connection.prepareStatement(READ_USER);
+			statement.setString(1, user.getLogin());
+			statement.setString(2, user.getPassword());
 			ResultSet set = statement.executeQuery();
 			if (set.next()) {
-				user = new User(set.getInt(1), set.getString(2), set.getString(3));
+				resultUser = new User(set.getInt(1), set.getInt(2), set.getInt(3), 
+						set.getString(4), set.getString(5));
 			}
 			connectionPool.closeConnection(connection, statement, set);
 		} catch (SQLException e) {
@@ -31,23 +37,25 @@ public class UserDAOImpl implements UserDAO{
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("connection pool problem", e);
 		}
-		return user;
+		return resultUser;
 	}
 
 	@Override
-	public void createUser(String name, String pass) throws DAOException {
+	public void createUser(User user) throws DAOException {
 		try {
 			ConnectionPool connectionPool = ConnectionPool.getInstance();
 			Connection connection = connectionPool.takeConnection();
-			String req = "insert into user values(?, ?, ?)";
-			PreparedStatement statement = connection.prepareStatement(req);
-			Statement st = connection.createStatement(); //autoincrement
+			PreparedStatement statement = connection.prepareStatement(CREATE_USER);
+			Statement st = connection.createStatement(); //auto increment
 			ResultSet rs = st.executeQuery("select max(`user-id`) from user");
 			rs.next();
 			int id = rs.getInt(1) + 1;
-			statement.setInt(1, id);
-			statement.setString(2, name);
-			statement.setString(3, pass);
+			user.setUserId(id);
+			statement.setInt(1, user.getUserId());
+			statement.setInt(2, user.getRoleId());
+			statement.setInt(3, user.getWalletId());
+			statement.setString(4, user.getLogin());
+			statement.setString(3, user.getPassword());
 			statement.executeUpdate();
 			rs.close();
 			st.close();

@@ -4,8 +4,8 @@ import by.training.epam.bean.User;
 
 public interface UserDAO {
 	
-	public User readUser(String name) throws DAOException;
+	public User readUser(User user) throws DAOException;
 	
-	public void createUser(String name, String pass) throws DAOException;
+	public void createUser(User user) throws DAOException;
 	
 }

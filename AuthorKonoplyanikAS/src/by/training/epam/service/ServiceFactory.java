@@ -1,5 +1,7 @@
 package by.training.epam.service;
 
+import by.training.epam.service.impl.UserServiceImpl;
+
 public class ServiceFactory {
 	
 	UserService userService;

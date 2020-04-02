@@ -1,8 +1,10 @@
 package by.training.epam.service;
 
+import by.training.epam.bean.User;
+
 public interface UserService {
 	
-	public boolean createUser(String name, String pass) throws ServiceException;
-	public boolean readUser(String name, String pass) throws ServiceException;
+	public boolean createUser(User user) throws ServiceException;
+	public boolean readUser(User user) throws ServiceException;
 	
 }

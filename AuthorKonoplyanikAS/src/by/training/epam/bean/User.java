@@ -6,25 +6,45 @@ public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
+	private int userId;
+	private int roleId;
+	private int walletId;
 	private String login;
 	private String password;
 	
 	public User() {}
-	
-	public User(int id, String login, String password) {
+
+	public User(int userId, int roleId, int walletId, String login, String password) {
 		super();
-		this.id = id;
+		this.userId = userId;
+		this.roleId = roleId;
+		this.walletId = walletId;
 		this.login = login;
 		this.password = password;
 	}
 
-	public int getId() {
-		return id;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public int getWalletId() {
+		return walletId;
+	}
+
+	public void setWalletId(int walletId) {
+		this.walletId = walletId;
 	}
 
 	public String getLogin() {
@@ -47,9 +67,11 @@ public class User implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + roleId;
+		result = prime * result + userId;
+		result = prime * result + walletId;
 		return result;
 	}
 
@@ -62,8 +84,6 @@ public class User implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (id != other.id)
-			return false;
 		if (login == null) {
 			if (other.login != null)
 				return false;
@@ -74,12 +94,19 @@ public class User implements Serializable{
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
+		if (roleId != other.roleId)
+			return false;
+		if (userId != other.userId)
+			return false;
+		if (walletId != other.walletId)
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", password=" + password + "]";
+		return "User [userId=" + userId + ", roleId=" + roleId + ", walletId=" + walletId + ", login=" + login
+				+ ", password=" + password + "]";
 	}
 
 }

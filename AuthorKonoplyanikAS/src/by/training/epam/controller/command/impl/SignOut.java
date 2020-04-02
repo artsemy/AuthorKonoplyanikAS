@@ -15,10 +15,9 @@ public class SignOut implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session =  request.getSession();
-		session.removeAttribute("name");
+		session.removeAttribute("login");
 		String res = "bye, bye";
 		request.setAttribute("result", res);
-		session.removeAttribute("name");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/home.jsp");
 		dispatcher.forward(request, response);
 	}
