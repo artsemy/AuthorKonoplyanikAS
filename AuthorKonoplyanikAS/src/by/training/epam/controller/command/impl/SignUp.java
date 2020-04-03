@@ -48,6 +48,8 @@ public class SignUp implements Command{
 		User user = new User();
 		user.setLogin(login);
 		user.setPassword(password);
+		user.setRoleId(2); //user role
+		user.setWalletId(3); //empty wallet
 		return user;
 	}
 

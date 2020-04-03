@@ -10,11 +10,14 @@ import by.training.epam.service.UserService;
 public class UserServiceImpl implements UserService{
 	
 	@Override
-	public boolean readUser(User user) throws ServiceException {
+	public boolean readUser(String login, String password) throws ServiceException {
+		if (login == null || password == null) {
+			return false;
+		}
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
-			User resultUser = userDAO.readUser(user);
+			User resultUser = userDAO.readUser(login, password);
 			if (resultUser == null) {
 				return false;
 			}
@@ -26,10 +29,13 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public boolean createUser(User user) throws ServiceException {
+		if (user == null) {
+			return false;
+		}
 		try {
 			DAOFactory daoFactory = DAOFactory.getInstance();
 			UserDAO userDAO = daoFactory.getUserDAO();
-			User resultUser = userDAO.readUser(user);
+			User resultUser = userDAO.readUser(user.getLogin());
 			if (resultUser != null) {
 				return false;
 			}

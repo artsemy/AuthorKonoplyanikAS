@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.training.epam.controller.command.Command;
 import by.training.epam.controller.command.CommandFactory;
-import by.training.epam.service.ServiceException;
-import by.training.epam.service.ServiceFactory;
-import by.training.epam.service.UserService;
 
 public class Controller {
 	
@@ -27,8 +24,12 @@ public class Controller {
 			command = "sign_up";
 		} else if (request.getParameter("sign_in") != null) {
 			command = "sign_in";
-		} else {
+		} else if (request.getParameter("sign_out") != null) {
 			command = "sign_out";
+		} else if (request.getParameter("lang_ru") != null) {
+			command = "lang_ru";
+		} else {
+			command = "lang_en";
 		}
 		return command;
 	}

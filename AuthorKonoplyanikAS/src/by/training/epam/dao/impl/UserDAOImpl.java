@@ -14,18 +14,41 @@ import by.training.epam.dao.connectionpool.ConnectionPoolException;
 
 public class UserDAOImpl implements UserDAO {
 	
-	private static final String READ_USER = "select * from user where login = ? and password = ?";
+	private static final String READ_USER_LOG = "select * from user where login = ?";
+	private static final String READ_USER_LOG_PASS = "select * from user where login = ? and password = ?";
 	private static final String CREATE_USER = "insert into user values(?, ?, ?, ?, ?)";
 	
 	@Override
-	public User readUser(User user) throws DAOException {
+	public User readUser(String login) throws DAOException {
 		User resultUser = null;
 		try {
 			ConnectionPool connectionPool = ConnectionPool.getInstance();
 			Connection connection = connectionPool.takeConnection();
-			PreparedStatement statement = connection.prepareStatement(READ_USER);
-			statement.setString(1, user.getLogin());
-			statement.setString(2, user.getPassword());
+			PreparedStatement statement = connection.prepareStatement(READ_USER_LOG);
+			statement.setString(1, login);
+			ResultSet set = statement.executeQuery();
+			if (set.next()) {
+				resultUser = new User(set.getInt(1), set.getInt(2), set.getInt(3), 
+						set.getString(4), set.getString(5));
+			}
+			connectionPool.closeConnection(connection, statement, set);
+		} catch (SQLException e) {
+			throw new DAOException("db problem", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("connection pool problem", e);
+		}
+		return resultUser;
+	}
+	
+	@Override
+	public User readUser(String login, String password) throws DAOException {
+		User resultUser = null;
+		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.takeConnection();
+			PreparedStatement statement = connection.prepareStatement(READ_USER_LOG_PASS);
+			statement.setString(1, login);
+			statement.setString(2, password);
 			ResultSet set = statement.executeQuery();
 			if (set.next()) {
 				resultUser = new User(set.getInt(1), set.getInt(2), set.getInt(3), 
@@ -55,7 +78,7 @@ public class UserDAOImpl implements UserDAO {
 			statement.setInt(2, user.getRoleId());
 			statement.setInt(3, user.getWalletId());
 			statement.setString(4, user.getLogin());
-			statement.setString(3, user.getPassword());
+			statement.setString(5, user.getPassword());
 			statement.executeUpdate();
 			rs.close();
 			st.close();

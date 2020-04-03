@@ -5,7 +5,9 @@ public enum CommandName {
 	SIGN_IN,
 	SIGN_OUT,
 	SIGN_UP,
-	ERROR;
+	ERROR,
+	LANG_RU,
+	LANG_EN;
 	
 	public static CommandName parse(String name) {
 		CommandName commandName;
