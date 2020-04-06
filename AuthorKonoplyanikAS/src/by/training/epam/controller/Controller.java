@@ -24,12 +24,8 @@ public class Controller {
 			command = "sign_up";
 		} else if (request.getParameter("sign_in") != null) {
 			command = "sign_in";
-		} else if (request.getParameter("sign_out") != null) {
-			command = "sign_out";
-		} else if (request.getParameter("lang_ru") != null) {
-			command = "lang_ru";
 		} else {
-			command = "lang_en";
+			command = "sign_out";
 		}
 		return command;
 	}

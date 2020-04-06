@@ -32,11 +32,11 @@ public class SignUp implements Command{
 		}
 		String url, res;
 		if (successful) {
-			url = "jsp/home.jsp";
+			url = "main.jsp";
 			res = "successful";
 			session.setAttribute("login", login);
 		} else {
-			url = "jsp/error.jsp";
+			url = "error.jsp";
 			res = "something goes wrong";
 		}
 		request.setAttribute("result", res);

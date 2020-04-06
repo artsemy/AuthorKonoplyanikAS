@@ -67,6 +67,7 @@ public class ConnectionPool {
 		} catch (SQLException e) {
 			throw new ConnectionPoolException("db problem", e);
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 			throw new ConnectionPoolException("driver problem", e);
 		}
 	}

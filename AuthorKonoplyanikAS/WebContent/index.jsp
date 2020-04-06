@@ -11,17 +11,7 @@
 		<title>Authorization</title>
 	</head>
 	<body>
-		<form action="ServletForJsp" method="post">
-			<input type="hidden" name="command" value="naming" />
-			<fmt:message key="label.insertLogin" /> <br />
-			<input type="text" name="login" value="" /><br />
-			<fmt:message key="label.insertPassword" /><br />
-			<input type="text" name="password" value="" /><br />
-			<input type="submit" name="sign_up" value="<fmt:message key="label.signUp" />" /><br />
-			<input type="submit" name="sign_in" value="<fmt:message key="label.signIn" />" />
-			<input type="submit" name="sign_out" value="<fmt:message key="label.signOut" />" /><br />
-		</form>
-		<a href="?lang=en"><fmt:message key="label.en" /></a>
-		<a href="?lang=ru"><fmt:message key="label.ru" /></a>
+		<h1>index.jsp</h1>
+		<c:redirect url = "jsp/main.jsp" />
 	</body>
 </html>

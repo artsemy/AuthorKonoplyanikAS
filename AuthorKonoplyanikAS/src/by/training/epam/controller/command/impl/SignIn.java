@@ -30,10 +30,10 @@ public class SignIn implements Command {
 		}
 		String url, res;
 		if (successful) {
-			url = "jsp/home.jsp";
+			url = "main.jsp";
 			res = "successfull";
 		} else {
-			url = "jsp/error.jsp";
+			url = "error.jsp";
 			res = "something goes wrong";
 		}
 		session.setAttribute("login", login);

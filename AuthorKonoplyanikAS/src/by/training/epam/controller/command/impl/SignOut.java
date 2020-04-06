@@ -18,7 +18,7 @@ public class SignOut implements Command{
 		session.removeAttribute("login");
 		String res = "bye, bye";
 		request.setAttribute("result", res);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/home.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request, response);
 	}
 

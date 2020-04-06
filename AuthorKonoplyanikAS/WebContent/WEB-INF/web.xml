@@ -16,7 +16,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletForJsp</servlet-name>
-    <url-pattern>/ServletForJsp</url-pattern>
+    <url-pattern>/jsp/ServletForJsp</url-pattern>
   </servlet-mapping>
   
 </web-app>
