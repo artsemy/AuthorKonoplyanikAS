@@ -23,7 +23,7 @@
 	<form action="main.jsp">
     	<button>main</button>
     </form>
-    	<form action="ServletForJsp" method="post">
+   	<form action="ServletForJsp" method="post">
 		<input type="hidden" name="locale">
 		<input type="submit" name="lang_ru" value="<fmt:message key="label.ru" />" />
 		<input type="submit" name="lang_en" value="<fmt:message key="label.en" />" />

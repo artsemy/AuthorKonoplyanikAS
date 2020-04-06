@@ -13,8 +13,9 @@ public class Error implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/error.jsp");
-		dispatcher.forward(request, response);
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+//		dispatcher.forward(request, response);
+		response.sendRedirect("error.jsp");
 	}
 
 }

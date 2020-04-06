@@ -21,13 +21,13 @@
 		</c:if>
 		<c:if test="${sessionScope.login != null}">
 			<form action="ServletForJsp" method="post">
-				<input type="submit" name="sing_out" value="<fmt:message key="label.signOut" />" />
+				<input type="submit" name="sign_out" value="<fmt:message key="label.signOut" />" />
 			</form>
 		</c:if>
 	</div>
 	<p>session.name = ${sessionScope.login}</p>
 	<p>session.locale = ${sessionScope.locale}</p>
-		<form action="ServletForJsp" method="post">
+	<form action="ServletForJsp" method="post">
 		<input type="hidden" name="locale">
 		<input type="submit" name="lang_ru" value="<fmt:message key="label.ru" />" />
 		<input type="submit" name="lang_en" value="<fmt:message key="label.en" />" />

@@ -26,8 +26,10 @@ public class Controller {
 			command = "sign_in";
 		} else if (request.getParameter("sign_out") != null){
 			command = "sign_out";
-		} else {
+		} else if (request.getParameter("locale") != null){
 			command = "locale";
+		} else {
+			command = "error";
 		}
 		return command;
 	}

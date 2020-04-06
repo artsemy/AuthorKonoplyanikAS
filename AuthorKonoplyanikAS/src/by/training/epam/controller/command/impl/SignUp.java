@@ -40,8 +40,9 @@ public class SignUp implements Command{
 			res = "something goes wrong";
 		}
 		request.setAttribute("result", res);
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+//		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+//		dispatcher.forward(request, response);
+		response.sendRedirect(url);
 	}
 	
 	private User buildUser(String login, String password) {

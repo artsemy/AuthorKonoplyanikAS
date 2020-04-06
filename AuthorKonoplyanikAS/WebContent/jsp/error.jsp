@@ -13,10 +13,13 @@
 	<body>
 		<h1>error.jsp</h1>
 		<fmt:message key="label.error" />
-			<form action="ServletForJsp" method="post">
-		<input type="hidden" name="locale">
-		<input type="submit" name="lang_ru" value="<fmt:message key="label.ru" />" />
-		<input type="submit" name="lang_en" value="<fmt:message key="label.en" />" />
-	</form>
+		<form action="ServletForJsp" method="post">
+			<input type="hidden" name="locale">
+			<input type="submit" name="lang_ru" value="<fmt:message key="label.ru" />" />
+			<input type="submit" name="lang_en" value="<fmt:message key="label.en" />" />
+		</form>
+		<form action="main.jsp">
+    		<button>main</button>
+    	</form>
 	</body>
 </html>

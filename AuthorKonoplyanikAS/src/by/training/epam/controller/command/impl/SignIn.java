@@ -32,14 +32,15 @@ public class SignIn implements Command {
 		if (successful) {
 			url = "main.jsp";
 			res = "successfull";
+			session.setAttribute("login", login);
 		} else {
 			url = "error.jsp";
 			res = "something goes wrong";
 		}
-		session.setAttribute("login", login);
 		request.setAttribute("result", res);
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+//		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+//		dispatcher.forward(request, response);
+		response.sendRedirect(url);
 	}
 	
 }
