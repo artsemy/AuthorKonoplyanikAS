@@ -24,8 +24,10 @@ public class Controller {
 			command = "sign_up";
 		} else if (request.getParameter("sign_in") != null) {
 			command = "sign_in";
-		} else {
+		} else if (request.getParameter("sign_out") != null){
 			command = "sign_out";
+		} else {
+			command = "locale";
 		}
 		return command;
 	}

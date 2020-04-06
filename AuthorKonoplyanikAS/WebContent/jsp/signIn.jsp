@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
-	<fmt:setLocale value="${param.lang}" />
+	<fmt:setLocale value="${sessionScope.locale}" />
 	<fmt:setBundle basename="interface" />
 <html>
 <head>
@@ -25,7 +25,10 @@
 			<fmt:message key="label.registration" />
 		</a>
 	</p>
-	<a href="?lang=en"><fmt:message key="label.en" /></a>
-	<a href="?lang=ru"><fmt:message key="label.ru" /></a>
+	<form action="ServletForJsp" method="post">
+		<input type="hidden" name="locale">
+		<input type="submit" name="lang_ru" value="<fmt:message key="label.ru" />" />
+		<input type="submit" name="lang_en" value="<fmt:message key="label.en" />" />
+	</form>
 </body>
 </html>

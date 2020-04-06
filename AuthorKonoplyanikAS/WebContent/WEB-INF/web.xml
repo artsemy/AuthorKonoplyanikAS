@@ -19,4 +19,13 @@
     <url-pattern>/jsp/ServletForJsp</url-pattern>
   </servlet-mapping>
   
+  <filter>
+  	<filter-name>FilterLocale</filter-name>
+  	<filter-class>by.training.epam.FilterLocale</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>FilterLocale</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
 </web-app>
