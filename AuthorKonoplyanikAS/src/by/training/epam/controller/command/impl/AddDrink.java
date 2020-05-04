@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import by.training.epam.controller.ControllerConstant;
 import by.training.epam.controller.command.Command;
 
-public class Error implements Command{
+public class AddDrink implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.ERROR_PAGE);
+		String id = request.getParameter(ControllerConstant.COFFEE_ID);
+		request.setAttribute(ControllerConstant.COFFEE_ID, id);
+		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.ADD_DRINK_PAGE);
 		dispatcher.forward(request, response);
 	}
 

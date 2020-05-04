@@ -3,6 +3,7 @@ package by.training.epam.controller.command;
 import java.util.HashMap;
 import java.util.Map;
 
+import by.training.epam.controller.command.impl.AddDrink;
 import by.training.epam.controller.command.impl.ChangeLang;
 import by.training.epam.controller.command.impl.Error;
 import by.training.epam.controller.command.impl.SignIn;
@@ -19,6 +20,7 @@ public class CommandFactory {
         commands.put(CommandName.SIGN_OUT, new SignOut());
         commands.put(CommandName.ERROR, new Error());
         commands.put(CommandName.LOCALE, new ChangeLang());
+        commands.put(CommandName.ADD_DRINK, new AddDrink());
 	}
 
     public Command getCommand(String cName){

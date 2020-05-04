@@ -6,7 +6,8 @@ public enum CommandName {
 	SIGN_OUT,
 	SIGN_UP,
 	ERROR,
-	LOCALE;
+	LOCALE,
+	ADD_DRINK;
 	
 	public static CommandName parse(String name) {
 		CommandName commandName;

@@ -20,16 +20,18 @@ public class Controller {
 	
 	private String parceCommand(HttpServletRequest request) {
 		String command = null;
-		if (request.getParameter("sign_up") != null) {
-			command = "sign_up";
-		} else if (request.getParameter("sign_in") != null) {
-			command = "sign_in";
-		} else if (request.getParameter("sign_out") != null){
-			command = "sign_out";
-		} else if (request.getParameter("locale") != null){
-			command = "locale";
+		if (request.getParameter(ControllerConstant.SIGN_UP) != null) {
+			command = ControllerConstant.SIGN_UP;
+		} else if (request.getParameter(ControllerConstant.SIGN_IN) != null) {
+			command = ControllerConstant.SIGN_IN;
+		} else if (request.getParameter(ControllerConstant.SIGN_OUT) != null) {
+			command = ControllerConstant.SIGN_OUT;
+		} else if (request.getParameter(ControllerConstant.LOCALE) != null) {
+			command = ControllerConstant.LOCALE;
+		} else if (request.getParameter(ControllerConstant.ADD_DRINK) != null) {
+			command = ControllerConstant.ADD_DRINK;
 		} else {
-			command = "error";
+			command = ControllerConstant.ERROR;
 		}
 		return command;
 	}

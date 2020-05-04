@@ -10,15 +10,17 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class FilterLocale implements Filter{
+import by.training.epam.controller.ControllerConstant;
+
+public class FilterLocale implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
-		if (session.getAttribute("locale") == null) {
-			session.setAttribute("locale", "en");
+		if (session.getAttribute(ControllerConstant.SA_LOCALE) == null) {
+			session.setAttribute(ControllerConstant.SA_LOCALE, ControllerConstant.EN);
 		}
 		chain.doFilter(request, response);
 	}

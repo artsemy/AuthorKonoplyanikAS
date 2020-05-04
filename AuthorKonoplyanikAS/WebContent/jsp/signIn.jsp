@@ -27,6 +27,7 @@
 	</p>
 	<form action="ServletForJsp" method="post">
 		<input type="hidden" name="locale">
+		<input type="hidden" name="page_url" value="signIn.jsp"/>
 		<input type="submit" name="lang_ru" value="<fmt:message key="label.ru" />" />
 		<input type="submit" name="lang_en" value="<fmt:message key="label.en" />" />
 	</form>

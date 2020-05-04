@@ -28,26 +28,8 @@ public class ServletForJsp extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		Set<String> set = funk();
-//		request.setAttribute("array", set);
 		Controller c = new Controller();
 		c.run(request, response);
 	}
-	
-//	public static Set<String> funk() {
-//		Set<String> set = new TreeSet<String>();
-//		try {
-//			ConnectionPool connectionPool = ConnectionPool.getInstance();
-//			Connection connection = connectionPool.takeConnection();
-//			Statement st = connection.createStatement();
-//			ResultSet rs = st.executeQuery("select * from `drink-menu`");
-//			while (rs.next()) {
-//				set.add(rs.getString(2));
-//			}
-//		} catch (ConnectionPoolException | SQLException e) {
-//			set = null;
-//		}
-//		return set;
-//	}
 
 }

@@ -25,4 +25,10 @@ public interface OrderDAO {
 	public List<OrderDrink> readOrderDrinkByOrder(int orderId) throws DAOException;
 	public Delivery readDelivery(int deliveryId) throws DAOException;
 	
+	public boolean deleteDrink(int drinkId) throws DAOException;
+	public boolean deleteDrinkIngredient(int drinkIngredientId) throws DAOException;
+	public boolean deleteOrder(int orderId) throws DAOException;
+	public boolean deleteOrderDrink(int orderDrinkId) throws DAOException;
+	public boolean deleteDelivery(int deliveryId) throws DAOException;
+	
 }

@@ -29,8 +29,66 @@
 	<p>session.locale = ${sessionScope.locale}</p>
 	<form action="ServletForJsp" method="post">
 		<input type="hidden" name="locale">
+		<input type="hidden" name="page_url" value="main.jsp"/>
 		<input type="submit" name="lang_ru" value="<fmt:message key="label.ru" />" />
 		<input type="submit" name="lang_en" value="<fmt:message key="label.en" />" />
 	</form>
+	<div>
+		<table>
+			<tr>
+				<td>
+					<form action="ServletForJsp" method="post">
+						<input type="hidden" name="add_drink" value="add_drink"/>
+						<input type="hidden" name="coffee_id" value="1"/>
+						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+					</form>
+				</td>
+				<td>
+					<form action="ServletForJsp" method="post">
+						<input type="hidden" name="add_drink" value="add_drink"/>
+						<input type="hidden" name="coffee_id" value="2"/>
+						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+					</form>
+				</td>
+				<td>
+					<form action="ServletForJsp" method="post">
+						<input type="hidden" name="add_drink" value="add_drink"/>
+						<input type="hidden" name="coffee_id" value="3"/>
+						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+					</form>
+				</td><td>
+					<form action="ServletForJsp" method="post">
+						<input type="hidden" name="add_drink" value="add_drink"/>
+						<input type="hidden" name="coffee_id" value="4"/>
+						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<form action="ServletForJsp" method="post">
+						<input type="hidden" name="add_drink" value="add_drink"/>
+						<input type="hidden" name="coffee_id" value="5"/>
+						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+					</form>
+				</td>
+				<td>
+					<form action="ServletForJsp" method="post">
+						<input type="hidden" name="add_drink" value="add_drink"/>
+						<input type="hidden" name="coffee_id" value="6"/>
+						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+					</form>
+				</td>
+				<td>
+					<form action="ServletForJsp" method="post">
+						<input type="hidden" name="add_drink" value="add_drink"/>
+						<input type="hidden" name="coffee_id" value="7"/>
+						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+					</form>
+				</td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>
