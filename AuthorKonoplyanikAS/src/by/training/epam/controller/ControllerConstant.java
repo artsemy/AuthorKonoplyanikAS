@@ -23,6 +23,7 @@ public class ControllerConstant {
 	public static final String SA_LOCALE = "locale";
 	public static final String SA_LOGIN = "login";
 	public static final String COFFEE_ID = "coffee_id";
+	public static final String DRINK_STORE = "drink_store";
 	//attribute value
 	public static final String RU = "ru";
 	public static final String EN = "en";

@@ -9,22 +9,30 @@
 <head>
 <meta charset="utf-8">
 <title>main</title>
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
 	<h1>main.jsp</h1>
-	<div align="right">
-		<c:if test="${sessionScope.login == null}">
-			<form action="signIn.jsp">
-	   			<button><fmt:message key="label.signIn" /></button>
-	   		</form>
-		</c:if>
-		<c:if test="${sessionScope.login != null}">
-			<form action="ServletForJsp" method="post">
-				<input type="submit" name="sign_out" value="<fmt:message key="label.signOut" />" />
+	<div class="header-bgc">
+		<div class="header-logo">
+			<form action="main.jsp">
+				<input class="logo" type="image" src="../img/logo.png" alt="main">
 			</form>
-		</c:if>
+		</div>
+		<div class="header-login">
+			<c:if test="${sessionScope.login == null}">
+				<form action="signIn.jsp">
+		   			<button class="header-btn"><fmt:message key="label.signIn" /></button>
+		   		</form>
+			</c:if>
+			<c:if test="${sessionScope.login != null}">
+				<form action="ServletForJsp" method="post">
+					<input class="header-btn" type="submit" name="sign_out" value="<fmt:message key="label.signOut" />" />
+				</form>
+			</c:if>
+		</div>
 	</div>
+	<div class="clear"></div>
 	<p>session.name = ${sessionScope.login}</p>
 	<p>session.locale = ${sessionScope.locale}</p>
 	<form action="ServletForJsp" method="post">
@@ -40,27 +48,27 @@
 					<form action="ServletForJsp" method="post">
 						<input type="hidden" name="add_drink" value="add_drink"/>
 						<input type="hidden" name="coffee_id" value="1"/>
-						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+						<input type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 					</form>
 				</td>
 				<td>
 					<form action="ServletForJsp" method="post">
 						<input type="hidden" name="add_drink" value="add_drink"/>
 						<input type="hidden" name="coffee_id" value="2"/>
-						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+						<input type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 					</form>
 				</td>
 				<td>
 					<form action="ServletForJsp" method="post">
 						<input type="hidden" name="add_drink" value="add_drink"/>
 						<input type="hidden" name="coffee_id" value="3"/>
-						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+						<input type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 					</form>
 				</td><td>
 					<form action="ServletForJsp" method="post">
 						<input type="hidden" name="add_drink" value="add_drink"/>
 						<input type="hidden" name="coffee_id" value="4"/>
-						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+						<input type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 					</form>
 				</td>
 			</tr>
@@ -69,21 +77,21 @@
 					<form action="ServletForJsp" method="post">
 						<input type="hidden" name="add_drink" value="add_drink"/>
 						<input type="hidden" name="coffee_id" value="5"/>
-						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+						<input type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 					</form>
 				</td>
 				<td>
 					<form action="ServletForJsp" method="post">
 						<input type="hidden" name="add_drink" value="add_drink"/>
 						<input type="hidden" name="coffee_id" value="6"/>
-						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+						<input type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 					</form>
 				</td>
 				<td>
 					<form action="ServletForJsp" method="post">
 						<input type="hidden" name="add_drink" value="add_drink"/>
 						<input type="hidden" name="coffee_id" value="7"/>
-						<input type="image" src="img/coffeeCup.png" alt="coffee cup" >
+						<input type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 					</form>
 				</td>
 				<td></td>

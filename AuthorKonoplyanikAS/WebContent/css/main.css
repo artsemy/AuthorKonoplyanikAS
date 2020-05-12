@@ -1,0 +1,27 @@
+.header-bgc{
+	background-color: brown;
+	float: left;
+	width: 100%;
+}
+
+.header-logo{
+	float: left;
+	width: 90%;
+}
+
+.header-login{
+	float: left;
+	width: 10%;
+}
+
+.clear{
+	clear: left;
+}
+
+.header-btn{
+	width: 100%;
+}
+
+.logo{
+	width: 5%;
+}

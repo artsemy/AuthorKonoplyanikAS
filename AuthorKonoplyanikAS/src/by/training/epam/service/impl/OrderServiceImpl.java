@@ -1,5 +1,6 @@
 package by.training.epam.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import by.training.epam.bean.Delivery;
@@ -16,6 +17,12 @@ import by.training.epam.service.ServiceException;
 
 public class OrderServiceImpl implements OrderService {
 
+	@Override
+	public void addDrink(OrderStore orderStore, Drink drink) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public int createOrder(OrderStore orderStore) throws ServiceException {
 		try {
 			DAOFactory factory = DAOFactory.getInstance();
@@ -30,5 +37,5 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return 0;
 	}
-	
+
 }
