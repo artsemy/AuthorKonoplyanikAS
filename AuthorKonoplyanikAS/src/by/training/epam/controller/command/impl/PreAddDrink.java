@@ -42,7 +42,7 @@ public class PreAddDrink implements Command{
 	
 	private Drink buildDrink(HttpServletRequest request) {
 		Drink drink = new Drink();
-		int drinkMenuId = (int) request.getAttribute(ControllerConstant.COFFEE_ID);
+		int drinkMenuId = Integer.parseInt(request.getParameter(ControllerConstant.COFFEE_ID));
 		drink.setDrinkMenuId(drinkMenuId);
 		return drink;
 	}

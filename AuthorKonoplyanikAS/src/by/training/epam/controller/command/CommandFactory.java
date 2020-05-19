@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.training.epam.controller.command.impl.PreAddDrink;
+import by.training.epam.controller.command.impl.PreAddIngredient;
 import by.training.epam.controller.command.impl.ChangeLang;
 import by.training.epam.controller.command.impl.Error;
 import by.training.epam.controller.command.impl.SignIn;
@@ -21,6 +22,7 @@ public class CommandFactory {
         commands.put(CommandName.ERROR, new Error());
         commands.put(CommandName.LOCALE, new ChangeLang());
         commands.put(CommandName.ADD_DRINK, new PreAddDrink());
+        commands.put(CommandName.ADD_INGREDIENT, new PreAddIngredient());
 	}
 
     public Command getCommand(String cName){

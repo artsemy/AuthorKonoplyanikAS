@@ -1,6 +1,7 @@
 package by.training.epam.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DrinkStore implements Serializable{
@@ -10,7 +11,9 @@ public class DrinkStore implements Serializable{
 	private Drink drink;
 	private List<DrinkIngredient> ingredients;
 	
-	public DrinkStore() {}
+	public DrinkStore() {
+		ingredients = new ArrayList<DrinkIngredient>();
+	}
 
 
 	public DrinkStore(Drink drink, List<DrinkIngredient> ingredients) {

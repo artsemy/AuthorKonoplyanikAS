@@ -30,6 +30,8 @@ public class Controller {
 			command = ControllerConstant.LOCALE;
 		} else if (request.getParameter(ControllerConstant.ADD_DRINK) != null) {
 			command = ControllerConstant.ADD_DRINK;
+		} else if (request.getParameter(ControllerConstant.ADD_INGREDIENT) != null) {
+			command = ControllerConstant.ADD_INGREDIENT;
 		} else {
 			command = ControllerConstant.ERROR;
 		}

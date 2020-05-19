@@ -10,6 +10,16 @@
 </head>
 <body>
 	<h1>drinkOrder.jsp</h1>
-	<p>${requestScope.coffee_id}</p>
+	<p>drink_menu_id = ${sessionScope.drink_store.drink.drinkMenuId}</p>
+	<c:forEach var="item" items="${sessionScope.drink_store.ingredients}">
+		<p>${item.drinkIngredientId}</p>
+	</c:forEach>
+	<form action="ServletForJsp" method="post">
+		<select name="ingredient_id">
+			<option value="1">sugar</option>
+			<option value="2">lemon</option>
+		</select>
+		<input type="submit" name="add_ingredient" value="add" />
+	</form>
 </body>
 </html>
