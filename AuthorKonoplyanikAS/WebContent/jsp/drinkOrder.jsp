@@ -21,5 +21,8 @@
 		</select>
 		<input type="submit" name="add_ingredient" value="add" />
 	</form>
+	<form action="ServletForJsp" method="post">
+		<input type="submit" name="add_drink_to_order" value="add drink">
+	</form>
 </body>
 </html>

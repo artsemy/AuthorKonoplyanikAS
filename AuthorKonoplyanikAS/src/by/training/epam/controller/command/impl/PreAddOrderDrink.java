@@ -8,24 +8,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import by.training.epam.bean.DrinkIngredient;
 import by.training.epam.bean.DrinkStore;
+import by.training.epam.bean.OrderStore;
 import by.training.epam.controller.ControllerConstant;
 import by.training.epam.controller.command.Command;
 
-public class PreAddIngredient implements Command{
+public class PreAddOrderDrink implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		addIngredientToDrinkStore(request);
-		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.ADD_DRINK_PAGE);
+		saveOrderStoreToSession(request);
+		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.MAIN_PAGE);
 		dispatcher.forward(request, response);
 	}
 	
-	private void addIngredientToDrinkStore(HttpServletRequest request) {
+	private void saveOrderStoreToSession(HttpServletRequest request) {
+		OrderStore orderStore = getOrderStoreFromSession(request);
 		DrinkStore drinkStore = getDrinkStoreFromSession(request);
-		DrinkIngredient drinkIngredient = buildDrinkIngredient(request);
-		drinkStore.getIngredients().add(drinkIngredient);
+		orderStore.getDrinks().add(drinkStore);
+	}
+	
+	private OrderStore getOrderStoreFromSession(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		OrderStore orderStore = (OrderStore) session.getAttribute(ControllerConstant.ORDER_STORE);
+		if (orderStore == null) {
+			orderStore = new OrderStore();
+			session.setAttribute(ControllerConstant.ORDER_STORE, orderStore);
+		}
+		return orderStore;
 	}
 	
 	private DrinkStore getDrinkStoreFromSession(HttpServletRequest request) {
@@ -34,11 +44,4 @@ public class PreAddIngredient implements Command{
 		return drinkStore;
 	}
 	
-	private DrinkIngredient buildDrinkIngredient(HttpServletRequest request) {
-		int drinkIngredientId = Integer.parseInt(request.getParameter(ControllerConstant.INGREDIENT_ID));
-		DrinkIngredient drinkIngredient = new DrinkIngredient();
-		drinkIngredient.setDrinkIngredientId(drinkIngredientId);
-		return drinkIngredient;
-	}
-
 }

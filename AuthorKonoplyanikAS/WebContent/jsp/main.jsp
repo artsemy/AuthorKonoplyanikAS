@@ -98,5 +98,11 @@
 			</tr>
 		</table>
 	</div>
+	<h2>order</h2>
+	<div>
+		<c:forEach var="item" items="${sessionScope.order_store.drinks}">
+			<p>${item.drink.drinkMenuId}</p>
+		</c:forEach>
+	</div>
 </body>
 </html>
