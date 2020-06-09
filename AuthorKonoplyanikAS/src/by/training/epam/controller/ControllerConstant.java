@@ -11,6 +11,7 @@ public class ControllerConstant {
 	public static final String ADD_DRINK = "add_drink";
 	public static final String ADD_INGREDIENT = "add_ingredient";
 	public static final String ADD_DRINK_TO_ORDER = "add_drink_to_order";
+	public static final String PUSH_ORDER = "push_order";
 	//request parameter
 	public static final String PAGE_URL = "page_url";
 	public static final String LANG_RU = "lang_ru";
@@ -28,6 +29,9 @@ public class ControllerConstant {
 	public static final String DRINK_STORE = "drink_store";
 	public static final String COFFEE_ID = "coffee_id";
 	public static final String INGREDIENT_ID = "ingredient_id";
+	public static final String DELIVERY_END_DATE = "delivery_end_date";
+	public static final String DELIVERY_END_TIME = "delivery_end_time";
+	public static final String DELIVERY_TYPE = "delivery_type";
 	//attribute value
 	public static final String RU = "ru";
 	public static final String EN = "en";

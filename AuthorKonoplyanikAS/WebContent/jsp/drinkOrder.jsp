@@ -12,7 +12,7 @@
 	<h1>drinkOrder.jsp</h1>
 	<p>drink_menu_id = ${sessionScope.drink_store.drink.drinkMenuId}</p>
 	<c:forEach var="item" items="${sessionScope.drink_store.ingredients}">
-		<p>${item.drinkIngredientId}</p>
+		<p>${item.portionId}</p>
 	</c:forEach>
 	<form action="ServletForJsp" method="post">
 		<select name="ingredient_id">

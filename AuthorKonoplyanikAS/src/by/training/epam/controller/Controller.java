@@ -34,6 +34,8 @@ public class Controller {
 			command = ControllerConstant.ADD_INGREDIENT;
 		} else if (request.getParameter(ControllerConstant.ADD_DRINK_TO_ORDER) != null) {
 			command = ControllerConstant.ADD_DRINK_TO_ORDER;
+		} else if (request.getParameter(ControllerConstant.PUSH_ORDER) != null) {
+			command = ControllerConstant.PUSH_ORDER;
 		} else {
 			command = ControllerConstant.ERROR;
 		}

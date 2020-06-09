@@ -1,5 +1,11 @@
 package by.training.epam.dao;
 
-import java.util.Map;
+import java.util.List;
 
-public interface MenuDAO {}
+import by.training.epam.bean.DrinkMenuItem;
+
+public interface MenuDAO {
+	
+	public List<DrinkMenuItem> getMenu() throws DAOException;
+	
+}

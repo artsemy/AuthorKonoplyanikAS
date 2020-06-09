@@ -46,7 +46,7 @@ public class OrderDAOImpl implements OrderDAO {
 		try {
 			ConnectionPool connectionPool = ConnectionPool.getInstance();
 			Connection connection = connectionPool.takeConnection();
-			drinkId = getNextId(connection, "drink", "drink-id");
+			drinkId = getNextId(connection, "drink", "`drink-id`");
 			PreparedStatement preparedStatement = connection.prepareStatement(INSERT_DRINK);
 			preparedStatement.setInt(1, drinkId);
 			preparedStatement.setInt(2, drink.getDrinkMenuId());
@@ -75,6 +75,7 @@ public class OrderDAOImpl implements OrderDAO {
 			preparedStatement.executeUpdate();
 			connectionPool.closeConnection(connection, preparedStatement);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new DAOException("db problem", e);
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("connection pool problem", e);
@@ -95,6 +96,7 @@ public class OrderDAOImpl implements OrderDAO {
 			preparedStatement.setInt(3, orderDrink.getDrinkId());
 			preparedStatement.setString(4, orderDrink.getStatus());
 			preparedStatement.setInt(5, orderDrink.getSize());
+			preparedStatement.executeUpdate();
 			connectionPool.closeConnection(connection, preparedStatement);
 		} catch (SQLException e) {
 			throw new DAOException("db problem", e);
@@ -111,7 +113,7 @@ public class OrderDAOImpl implements OrderDAO {
 			ConnectionPool connectionPool = ConnectionPool.getInstance();
 			Connection connection = connectionPool.takeConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ORDER);
-			orderId = getNextId(connection, "order", "order-id");
+			orderId = getNextId(connection, "`order`", "`order-id`");
 			preparedStatement.setInt(1, orderId);
 			preparedStatement.setInt(2, order.getUserId());
 			preparedStatement.setInt(3, order.getDeliveryId());
@@ -136,7 +138,7 @@ public class OrderDAOImpl implements OrderDAO {
 			ConnectionPool connectionPool = ConnectionPool.getInstance();
 			Connection connection = connectionPool.takeConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(INSERT_DELIVERY);
-			deliveryId = getNextId(connection, "delivery", "delivery-id");
+			deliveryId = getNextId(connection, "delivery", "`delivery-id`");
 			preparedStatement.setInt(1, deliveryId);
 			preparedStatement.setString(2, delivery.getType());
 			preparedStatement.setString(3, delivery.getStatus());
@@ -145,6 +147,7 @@ public class OrderDAOImpl implements OrderDAO {
 			preparedStatement.executeUpdate();
 			connectionPool.closeConnection(connection, preparedStatement);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new DAOException("db problem", e);
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("connection pool problem", e);
@@ -154,15 +157,17 @@ public class OrderDAOImpl implements OrderDAO {
 	
 	private int getNextId(Connection connection, String tableName, String columnName) throws SQLException {
 		int nextId = -1;
-		String sqlRequest = "select max(?) from ?";
+		String sqlRequest = "select max(columnName) from tableName";
+		sqlRequest = sqlRequest.replaceFirst("columnName", columnName);
+		sqlRequest = sqlRequest.replaceFirst("tableName", tableName);
 		PreparedStatement preparedStatement = connection.prepareStatement(sqlRequest);
-		preparedStatement.setString(1, columnName);
-		preparedStatement.setString(2, tableName);
+//		preparedStatement.setString(1, columnName); //fix
+//		preparedStatement.setString(2, tableName); //fix
 		ResultSet resultSet = preparedStatement.executeQuery();
 		resultSet.next();
+		nextId = resultSet.getInt(1) + 1;
 		resultSet.close();
 		preparedStatement.close();
-		nextId = resultSet.getInt(1) + 1;
 		return nextId;
 	}
 

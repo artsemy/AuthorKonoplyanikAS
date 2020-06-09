@@ -13,6 +13,8 @@ public class OrderStore implements Serializable {
 	private List<DrinkStore> drinks;
 	
 	public OrderStore() {
+		order = new Order();
+		delivery = new Delivery();
 		drinks = new ArrayList<DrinkStore>();
 	}
 

@@ -103,6 +103,9 @@
 		<c:forEach var="item" items="${sessionScope.order_store.drinks}">
 			<p>${item.drink.drinkMenuId}</p>
 		</c:forEach>
+		<form action="order.jsp">
+			<input type="submit" value="order">
+		</form>
 	</div>
 </body>
 </html>

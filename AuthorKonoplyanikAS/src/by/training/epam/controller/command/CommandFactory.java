@@ -6,6 +6,7 @@ import java.util.Map;
 import by.training.epam.controller.command.impl.PreAddDrink;
 import by.training.epam.controller.command.impl.PreAddIngredient;
 import by.training.epam.controller.command.impl.PreAddOrderDrink;
+import by.training.epam.controller.command.impl.PushOrder;
 import by.training.epam.controller.command.impl.ChangeLang;
 import by.training.epam.controller.command.impl.Error;
 import by.training.epam.controller.command.impl.SignIn;
@@ -25,6 +26,7 @@ public class CommandFactory {
         commands.put(CommandName.ADD_DRINK, new PreAddDrink());
         commands.put(CommandName.ADD_INGREDIENT, new PreAddIngredient());
         commands.put(CommandName.ADD_DRINK_TO_ORDER, new PreAddOrderDrink());
+        commands.put(CommandName.PUSH_ORDER, new PushOrder());
 	}
 
     public Command getCommand(String cName){

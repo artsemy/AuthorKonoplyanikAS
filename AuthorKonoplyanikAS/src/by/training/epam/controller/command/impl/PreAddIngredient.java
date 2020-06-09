@@ -37,7 +37,7 @@ public class PreAddIngredient implements Command{
 	private DrinkIngredient buildDrinkIngredient(HttpServletRequest request) {
 		int drinkIngredientId = Integer.parseInt(request.getParameter(ControllerConstant.INGREDIENT_ID));
 		DrinkIngredient drinkIngredient = new DrinkIngredient();
-		drinkIngredient.setDrinkIngredientId(drinkIngredientId);
+		drinkIngredient.setPortionId(drinkIngredientId); //fix
 		return drinkIngredient;
 	}
 
