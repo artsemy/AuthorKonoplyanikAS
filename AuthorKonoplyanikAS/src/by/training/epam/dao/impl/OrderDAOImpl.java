@@ -75,7 +75,6 @@ public class OrderDAOImpl implements OrderDAO {
 			preparedStatement.executeUpdate();
 			connectionPool.closeConnection(connection, preparedStatement);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new DAOException("db problem", e);
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("connection pool problem", e);
@@ -147,7 +146,6 @@ public class OrderDAOImpl implements OrderDAO {
 			preparedStatement.executeUpdate();
 			connectionPool.closeConnection(connection, preparedStatement);
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new DAOException("db problem", e);
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("connection pool problem", e);
