@@ -12,7 +12,7 @@
 <body>
 	<h1>order.jsp</h1>
 	<jsp:include page="header.jsp"></jsp:include>
-	
+	<br />
 	<div class="bloc">
 		<c:forEach var="drink" items="${sessionScope.order_store.drinks}">
 			<p>${drink.drink.drinkMenuId}</p>

@@ -14,7 +14,7 @@
 <body>
 	<h1>main.jsp</h1>
 	<jsp:include page="header.jsp"></jsp:include>
-	
+	<br />
 	<p>session.name = ${sessionScope.login}</p>
 	<p>session.locale = ${sessionScope.locale}</p>
 	<div class="bloc">
@@ -23,28 +23,28 @@
 				<tr>
 					<td>
 						<form action="ServletForJsp" method="post">
-							<input type="hidden" name="add_drink" value="add_drink"/>
+							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="1"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 						</form>
 					</td>
 					<td>
 						<form action="ServletForJsp" method="post">
-							<input type="hidden" name="add_drink" value="add_drink"/>
+							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="2"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 						</form>
 					</td>
 					<td>
 						<form action="ServletForJsp" method="post">
-							<input type="hidden" name="add_drink" value="add_drink"/>
+							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="3"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 						</form>
 					</td>
 					<td>
 						<form action="ServletForJsp" method="post">
-							<input type="hidden" name="add_drink" value="add_drink"/>
+							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="4"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 						</form>
@@ -53,21 +53,21 @@
 				<tr>
 					<td>
 						<form action="ServletForJsp" method="post">
-							<input type="hidden" name="add_drink" value="add_drink"/>
+							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="5"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 						</form>
 					</td>
 					<td>
 						<form action="ServletForJsp" method="post">
-							<input type="hidden" name="add_drink" value="add_drink"/>
+							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="6"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 						</form>
 					</td>
 					<td>
 						<form action="ServletForJsp" method="post">
-							<input type="hidden" name="add_drink" value="add_drink"/>
+							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="7"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
 						</form>

@@ -12,7 +12,7 @@
 <body>
 	<h1>drinkOrder.jsp</h1>
 	<jsp:include page="header.jsp"></jsp:include>
-	
+	<br />
 	<div class="bloc">
 		<p>drink_menu_id = ${sessionScope.drink_store.drink.drinkMenuId}</p>
 		<c:forEach var="item" items="${sessionScope.drink_store.ingredients}">
@@ -23,9 +23,11 @@
 				<option value="1">sugar</option>
 				<option value="2">lemon</option>
 			</select>
+			<input type="hidden" name="command" value="add_ingredient">
 			<input type="submit" name="add_ingredient" value="add" />
 		</form>
 		<form action="ServletForJsp" method="post">
+			<input type="hidden" name="command" value="add_drink_to_order">
 			<input type="submit" name="add_drink_to_order" value="add drink">
 		</form>
 	</div>
