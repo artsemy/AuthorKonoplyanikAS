@@ -1,0 +1,15 @@
+body{
+	background-image: url(../img/bcg.jpg);
+}
+
+.bloc{
+	background-color: rgba(139, 69, 19, .7);
+}
+
+p{
+	text-align: center;
+}
+
+h2{
+	text-align: center;
+}

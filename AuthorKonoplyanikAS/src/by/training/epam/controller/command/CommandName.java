@@ -10,7 +10,11 @@ public enum CommandName {
 	ADD_DRINK,
 	ADD_INGREDIENT,
 	ADD_DRINK_TO_ORDER,
-	PUSH_ORDER;
+	PUSH_ORDER,
+	GOTO_MAIN_PAGE,
+	GOTO_SIGN_IN_PAGE,
+	GOTO_REGISTRATION_PAGE,
+	GOTO_ORDER_PAGE;
 	
 	public static CommandName parse(String name) {
 		CommandName commandName;

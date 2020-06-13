@@ -3,6 +3,7 @@ package by.training.epam.controller;
 public class ControllerConstant {
 	
 	//command name
+	public static final String COMMAND = "command";
 	public static final String SIGN_UP = "sign_up";
 	public static final String SIGN_IN = "sign_in";
 	public static final String SIGN_OUT = "sign_out";
@@ -12,6 +13,10 @@ public class ControllerConstant {
 	public static final String ADD_INGREDIENT = "add_ingredient";
 	public static final String ADD_DRINK_TO_ORDER = "add_drink_to_order";
 	public static final String PUSH_ORDER = "push_order";
+	public static final String GOTO_MAIN_PAGE = "goto_main_page";
+	public static final String GOTO_SIGN_IN_PAGE = "goto_sign_in_page";
+	public static final String GOTO_REGISRATION_PAGE = "goto_registration_page";
+	public static final String GOTO_ORDER_PAGE = "goto_order_page";
 	//request parameter
 	public static final String PAGE_URL = "page_url";
 	public static final String LANG_RU = "lang_ru";
@@ -19,9 +24,12 @@ public class ControllerConstant {
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
 	//page url
-	public static final String ERROR_PAGE = "error.jsp";
 	public static final String MAIN_PAGE = "main.jsp";
+	public static final String SIGN_IN_PAGE = "signIn.jsp";
+	public static final String REGISTRATION_PAGE = "signUp.jsp";
+	public static final String ERROR_PAGE = "error.jsp";
 	public static final String ADD_DRINK_PAGE = "drinkOrder.jsp";
+	public static final String ORDER_PAGE = "order.jsp";
 	//(session) attribute
 	public static final String SA_LOCALE = "locale";
 	public static final String SA_LOGIN = "login";

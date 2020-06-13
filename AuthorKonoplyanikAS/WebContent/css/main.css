@@ -1,27 +1,26 @@
-.header-bgc{
-	background-color: brown;
+.body-menu{
 	float: left;
+	width: 80%;
+}
+
+.body-order{
+	float: left;
+	width: 20%;
+}
+
+.menu-item{
 	width: 100%;
-}
-
-.header-logo{
-	float: left;
-	width: 90%;
-}
-
-.header-login{
-	float: left;
-	width: 10%;
 }
 
 .clear{
 	clear: left;
 }
 
-.header-btn{
-	width: 100%;
+body{
+	background-image: url(../img/bcg.jpg);
 }
 
-.logo{
-	width: 5%;
+.bloc{
+	background-color: rgba(139, 69, 19, .7);
 }
+

@@ -1,5 +1,6 @@
 package by.training.epam.service;
 
+import by.training.epam.service.impl.MenuServiceImpl;
 import by.training.epam.service.impl.OrderServiceImpl;
 import by.training.epam.service.impl.UserServiceImpl;
 
@@ -7,12 +8,14 @@ public class ServiceFactory {
 	
 	UserService userService;
 	OrderService orderService;
+	MenuService menuService;
 	
 	private static ServiceFactory instance;
 	
 	private ServiceFactory() {
 		userService = new UserServiceImpl();
 		orderService = new OrderServiceImpl();
+		menuService = new MenuServiceImpl();
 	}
 	
 	public static synchronized ServiceFactory getInstance() {
@@ -30,4 +33,7 @@ public class ServiceFactory {
 		return orderService;
 	}
 	
+	public MenuService getMenuService() {
+		return menuService;
+	}
 }

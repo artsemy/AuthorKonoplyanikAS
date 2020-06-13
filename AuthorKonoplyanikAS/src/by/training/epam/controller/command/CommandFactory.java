@@ -9,6 +9,10 @@ import by.training.epam.controller.command.impl.PreAddOrderDrink;
 import by.training.epam.controller.command.impl.PushOrder;
 import by.training.epam.controller.command.impl.ChangeLang;
 import by.training.epam.controller.command.impl.Error;
+import by.training.epam.controller.command.impl.GotoMainPage;
+import by.training.epam.controller.command.impl.GotoOrderPage;
+import by.training.epam.controller.command.impl.GotoRegistrationPage;
+import by.training.epam.controller.command.impl.GotoSignInPage;
 import by.training.epam.controller.command.impl.SignIn;
 import by.training.epam.controller.command.impl.SignOut;
 import by.training.epam.controller.command.impl.SignUp;
@@ -27,6 +31,10 @@ public class CommandFactory {
         commands.put(CommandName.ADD_INGREDIENT, new PreAddIngredient());
         commands.put(CommandName.ADD_DRINK_TO_ORDER, new PreAddOrderDrink());
         commands.put(CommandName.PUSH_ORDER, new PushOrder());
+        commands.put(CommandName.GOTO_MAIN_PAGE, new GotoMainPage());
+        commands.put(CommandName.GOTO_SIGN_IN_PAGE, new GotoSignInPage());
+        commands.put(CommandName.GOTO_REGISTRATION_PAGE, new GotoRegistrationPage());
+        commands.put(CommandName.GOTO_ORDER_PAGE, new GotoOrderPage());
 	}
 
     public Command getCommand(String cName){

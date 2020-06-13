@@ -1,0 +1,67 @@
+.header-bloc{
+	background-color: rgba(139, 69, 19, .7);
+	height: 100px;
+}
+
+.header-left{
+	float: left;
+	width: 80%;
+	height: 100%;
+}
+
+.header-right{
+	float: left;
+	width: 20%;
+	height: 100%;
+}
+
+.clear{
+	clear: left;
+}
+
+.header-left form{
+	width: 10%;
+	height: 100%;
+	display: table;
+}
+
+.header-left form div{
+	display: table-cell;
+    vertical-align: middle;
+}
+
+.header-left form div input{
+	width: 100%;
+}
+
+.header-locale{
+	height: 100%;
+	align: right;
+	float: left;
+	width: 50%;
+}
+
+.header-locale form{
+	height: 100%;
+}
+
+.header-locale form input{
+	height: 100%;
+	width: 50%;
+	float: left;
+}
+
+.header-login{
+	height: 100%;
+	float: left;
+	width: 50%;
+}
+
+.header-login form{
+	height: 100%;
+}
+
+.header-login form input{
+	height: 100%;
+	width: 100%;
+}
