@@ -14,7 +14,9 @@ public enum CommandName {
 	GOTO_MAIN_PAGE,
 	GOTO_SIGN_IN_PAGE,
 	GOTO_REGISTRATION_PAGE,
-	GOTO_ORDER_PAGE;
+	GOTO_ORDER_PAGE,
+	REMOVE_INGREDIENT,
+	REMOVE_DRINK;
 	
 	public static CommandName parse(String name) {
 		CommandName commandName;

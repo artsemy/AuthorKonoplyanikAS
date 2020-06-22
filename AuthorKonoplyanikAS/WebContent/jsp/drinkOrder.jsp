@@ -15,9 +15,18 @@
 	<br />
 	<div class="bloc">
 		<p>drink_menu_id = ${sessionScope.drink_store.drink.drinkMenuId}</p>
-		<c:forEach var="item" items="${sessionScope.drink_store.ingredients}">
-			<p>${item.portionId}</p>
-		</c:forEach>
+			<table>
+			<c:forEach var="item" items="${sessionScope.drink_store.ingredients}">
+					<form action="ServletForJsp" method="post">
+						<input type="hidden" name="command" value="remove_ingredient">
+						<tr>
+							<td>${item.portionId}</td>
+							<td><input type="submit" name="remove_ingredient" value="-"></td>
+							<td><input type="hidden" name="ingredient_remove_id" value="${item.portionId}"></td>
+						</tr>
+					</form>
+			</c:forEach>
+			</table>
 		<form action="ServletForJsp" method="post">
 			<select name="ingredient_id">
 				<option value="1">sugar</option>

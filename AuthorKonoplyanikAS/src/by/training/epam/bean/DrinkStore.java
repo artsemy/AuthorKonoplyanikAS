@@ -12,6 +12,7 @@ public class DrinkStore implements Serializable{
 	private List<DrinkIngredient> ingredients;
 	
 	public DrinkStore() {
+		drink = new Drink();
 		ingredients = new ArrayList<DrinkIngredient>();
 	}
 

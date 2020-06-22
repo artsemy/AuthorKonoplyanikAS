@@ -14,7 +14,7 @@
 <body>
 	<h1>signIn.jsp</h1>
 	<jsp:include page="header.jsp"></jsp:include>
-	<input type="hidden" name="page_url" value="signIn.jsp"/>
+	<input type="hidden" name="page_url2" value="signIn.jsp"/>
 	<br />
 	<div class="bloc">
 		<form action="ServletForJsp" method="post">

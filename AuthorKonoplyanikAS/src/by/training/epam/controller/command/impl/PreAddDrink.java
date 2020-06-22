@@ -18,7 +18,7 @@ public class PreAddDrink implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		saveDrinkStoreToSession(request);
-		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.ADD_DRINK_PAGE);
+		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.DRINK_PAGE);
 		dispatcher.forward(request, response);
 	}
 	
