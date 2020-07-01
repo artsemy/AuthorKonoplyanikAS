@@ -8,4 +8,7 @@ public interface UserDAO {
 	public User readUser(String login, String password) throws DAOException;
 	public void createUser(User user) throws DAOException;
 	
+	public String readRole(int roleId) throws DAOException;
+	public int readWallet(int walletId) throws DAOException;
+	
 }

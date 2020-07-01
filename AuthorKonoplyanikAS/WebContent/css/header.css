@@ -7,6 +7,7 @@
 	float: left;
 	width: 80%;
 	height: 100%;
+	display: table;
 }
 
 .header-right{
@@ -20,6 +21,7 @@
 }
 
 .header-left form{
+	float: left;
 	width: 10%;
 	height: 100%;
 	display: table;
@@ -31,6 +33,18 @@
 }
 
 .header-left form div input{
+	width: 100%;
+}
+
+.header-left .space{
+	height: 100%;
+	float: left;
+	width: 70%;
+}
+
+.button{
+	/* background-color: rgba(0, 0, 0, 0); */
+	height: 100%;
 	width: 100%;
 }
 

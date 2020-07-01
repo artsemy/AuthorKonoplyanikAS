@@ -30,6 +30,7 @@ public class PushOrder implements Command{
 			RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.ERROR_PAGE);
 			dispatcher.forward(request, response);
 		}
+		setRequestAttribute(request); //fix
 		clearSessionAttribute(request);
 		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.MAIN_PAGE);
 		dispatcher.forward(request, response);
@@ -73,6 +74,12 @@ public class PushOrder implements Command{
 		HttpSession session = request.getSession();
 		session.removeAttribute(ControllerConstant.DRINK_STORE);
 		session.removeAttribute(ControllerConstant.ORDER_STORE);
+	}
+	
+	private void setRequestAttribute(HttpServletRequest request) { //fix
+		HttpSession session = request.getSession();
+		OrderStore orderStore = (OrderStore) session.getAttribute(ControllerConstant.ORDER_STORE);
+		request.setAttribute("active_order_store", orderStore);
 	}
 	
 }

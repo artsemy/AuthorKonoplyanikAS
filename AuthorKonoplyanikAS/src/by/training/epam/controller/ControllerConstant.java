@@ -19,12 +19,14 @@ public class ControllerConstant {
 	public static final String GOTO_ORDER_PAGE = "goto_order_page";
 	public static final String REMOVE_INGREDIENT = "remove_ingredient";
 	public static final String REMOVE_DRINK = "remove_drink";
+	public static final String DO_NOTHING = "do_nothing";
 	//request parameter
 	public static final String PAGE_URL = "page_url";
 	public static final String LANG_RU = "lang_ru";
 	public static final String LANG_EN = "lang_en";
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
+	public static final String NAME = "name";
 	//page url
 	public static final String MAIN_PAGE = "main.jsp";
 	public static final String SIGN_IN_PAGE = "signIn.jsp";
@@ -32,9 +34,11 @@ public class ControllerConstant {
 	public static final String ERROR_PAGE = "error.jsp";
 	public static final String DRINK_PAGE = "drinkOrder.jsp";
 	public static final String ORDER_PAGE = "order.jsp";
+	public static final String UPDATE_ORDER_PAGE = "updateOrder.jsp";
 	//(session) attribute
 	public static final String SA_LOCALE = "locale";
 	public static final String SA_LOGIN = "login";
+	public static final String USER_STORE = "user_store";
 	public static final String ORDER_STORE = "order_store";
 	public static final String DRINK_STORE = "drink_store";
 	public static final String COFFEE_ID = "coffee_id";

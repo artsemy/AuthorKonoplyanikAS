@@ -10,6 +10,7 @@ import by.training.epam.controller.command.impl.PushOrder;
 import by.training.epam.controller.command.impl.RemoveDrink;
 import by.training.epam.controller.command.impl.RemoveIngredient;
 import by.training.epam.controller.command.impl.ChangeLang;
+import by.training.epam.controller.command.impl.DoNothing;
 import by.training.epam.controller.command.impl.Error;
 import by.training.epam.controller.command.impl.GotoMainPage;
 import by.training.epam.controller.command.impl.GotoOrderPage;
@@ -39,6 +40,7 @@ public class CommandFactory {
         commands.put(CommandName.GOTO_ORDER_PAGE, new GotoOrderPage());
         commands.put(CommandName.REMOVE_INGREDIENT, new RemoveIngredient());
         commands.put(CommandName.REMOVE_DRINK, new RemoveDrink());
+        commands.put(CommandName.DO_NOTHING, new DoNothing());
 	}
 
     public Command getCommand(String cName){

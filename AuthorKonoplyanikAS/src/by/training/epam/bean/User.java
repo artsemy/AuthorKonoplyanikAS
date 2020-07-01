@@ -11,16 +11,18 @@ public class User implements Serializable{
 	private int walletId;
 	private String login;
 	private String password;
+	private String name;
 	
 	public User() {}
 
-	public User(int userId, int roleId, int walletId, String login, String password) {
+	public User(int userId, int roleId, int walletId, String login, String password, String name) {
 		super();
 		this.userId = userId;
 		this.roleId = roleId;
 		this.walletId = walletId;
 		this.login = login;
 		this.password = password;
+		this.name = name;
 	}
 
 	public int getUserId() {
@@ -63,11 +65,20 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + roleId;
 		result = prime * result + userId;
@@ -89,6 +100,11 @@ public class User implements Serializable{
 				return false;
 		} else if (!login.equals(other.login))
 			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
 		if (password == null) {
 			if (other.password != null)
 				return false;
@@ -106,7 +122,7 @@ public class User implements Serializable{
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", roleId=" + roleId + ", walletId=" + walletId + ", login=" + login
-				+ ", password=" + password + "]";
+				+ ", password=" + password + ", name=" + name + "]";
 	}
 
 }

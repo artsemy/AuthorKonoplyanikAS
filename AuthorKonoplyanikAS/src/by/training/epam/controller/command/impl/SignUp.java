@@ -22,9 +22,10 @@ public class SignUp implements Command{
 		HttpSession session =  request.getSession();
 		String login = request.getParameter(ControllerConstant.LOGIN);
 		String password = request.getParameter(ControllerConstant.PASSWORD);
+		String name = request.getParameter(ControllerConstant.NAME);
 		ServiceFactory factory = ServiceFactory.getInstance();
 		UserService service = factory.getUserService();
-		User user = buildUser(login, password);
+		User user = buildUser(login, password, name);
 		boolean successful;
 		try {
 			successful = service.createUser(user);
@@ -42,10 +43,11 @@ public class SignUp implements Command{
 		dispatcher.forward(request, response);
 	}
 	
-	private User buildUser(String login, String password) {
+	private User buildUser(String login, String password, String name) {
 		User user = new User();
 		user.setLogin(login);
 		user.setPassword(password);
+		user.setName(name);
 		user.setRoleId(2); //user role
 		user.setWalletId(3); //empty wallet
 		return user;

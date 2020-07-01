@@ -16,7 +16,8 @@ public enum CommandName {
 	GOTO_REGISTRATION_PAGE,
 	GOTO_ORDER_PAGE,
 	REMOVE_INGREDIENT,
-	REMOVE_DRINK;
+	REMOVE_DRINK,
+	DO_NOTHING;
 	
 	public static CommandName parse(String name) {
 		CommandName commandName;

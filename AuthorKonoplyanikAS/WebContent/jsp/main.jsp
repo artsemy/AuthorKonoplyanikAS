@@ -15,8 +15,6 @@
 	<h1>main.jsp</h1>
 	<jsp:include page="header.jsp"></jsp:include>
 	<br />
-	<p>session.name = ${sessionScope.login}</p>
-	<p>session.locale = ${sessionScope.locale}</p>
 	<div class="bloc">
 		<div class="body-menu">
 			<table>
@@ -77,7 +75,7 @@
 			</table>
 		</div>
 		<div class="body-order">
-			<h2>order</h2>
+			<h2>compile order</h2>
 			<c:forEach var="item" items="${sessionScope.order_store.drinks}">
 				<p>${item.drink.drinkMenuId}</p>
 			</c:forEach>
@@ -85,6 +83,15 @@
 				<input type="hidden" name="command" value="goto_order_page" >
 				<input type="submit" name="order" value="<fmt:message key="label.order" />" >
 			</form>
+			<hr>
+			<h2>shipped orders</h2>
+			<c:forEach var="order" items="${requestScope.active_order_store.drinks}">
+				<form action="ServletForJsp" method="post">
+					${order.drink.drinkMenuId}
+					<input type="submit" name="update_order" value="update">
+					<input type="hidden" name="command" value="update_order">
+				</form>
+			</c:forEach>
 		</div>
 		<div class="clear"></div>
 	</div>

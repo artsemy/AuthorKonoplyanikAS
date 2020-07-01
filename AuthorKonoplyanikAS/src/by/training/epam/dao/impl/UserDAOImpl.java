@@ -16,7 +16,11 @@ public class UserDAOImpl implements UserDAO {
 	
 	private static final String READ_USER_LOG = "select * from user where login = ?";
 	private static final String READ_USER_LOG_PASS = "select * from user where login = ? and password = ?";
-	private static final String CREATE_USER = "insert into user values(?, ?, ?, ?, ?)";
+	private static final String READ_USER_ROLE = "select title from role where `role-id` = ?";
+	private static final String READ_USER_WALLET = "select balance from wallet where `wallet-id` = ?";
+	
+	private static final String CREATE_USER = "insert into user values(?, ?, ?, ?, ?, ?)";
+	private static final String CREATE_WALLET = "insert into wallet values(?, ?)"; //add
 	
 	@Override
 	public User readUser(String login) throws DAOException {
@@ -29,7 +33,7 @@ public class UserDAOImpl implements UserDAO {
 			ResultSet set = statement.executeQuery();
 			if (set.next()) {
 				resultUser = new User(set.getInt(1), set.getInt(2), set.getInt(3), 
-						set.getString(4), set.getString(5));
+						set.getString(4), set.getString(5), set.getString(6));
 			}
 			connectionPool.closeConnection(connection, statement, set);
 		} catch (SQLException e) {
@@ -52,7 +56,7 @@ public class UserDAOImpl implements UserDAO {
 			ResultSet set = statement.executeQuery();
 			if (set.next()) {
 				resultUser = new User(set.getInt(1), set.getInt(2), set.getInt(3), 
-						set.getString(4), set.getString(5));
+						set.getString(4), set.getString(5), set.getString(6));
 			}
 			connectionPool.closeConnection(connection, statement, set);
 		} catch (SQLException e) {
@@ -79,6 +83,7 @@ public class UserDAOImpl implements UserDAO {
 			statement.setInt(3, user.getWalletId());
 			statement.setString(4, user.getLogin());
 			statement.setString(5, user.getPassword());
+			statement.setString(6, user.getName());
 			statement.executeUpdate();
 			rs.close();
 			st.close();
@@ -88,6 +93,48 @@ public class UserDAOImpl implements UserDAO {
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("connection pool problem", e);
 		}
+	}
+
+	@Override
+	public String readRole(int roleId) throws DAOException {
+		String role = null;
+		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.takeConnection();
+			PreparedStatement statement = connection.prepareStatement(READ_USER_ROLE);
+			statement.setInt(1, roleId);
+			ResultSet set = statement.executeQuery();
+			if (set.next()) {
+				role = set.getString(1);
+			}
+			connectionPool.closeConnection(connection, statement, set);
+		} catch (SQLException e) {
+			throw new DAOException("db problem", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("connection pool problem", e);
+		}
+		return role;
+	}
+
+	@Override
+	public int readWallet(int walletId) throws DAOException {
+		int wallet = 0;
+		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.takeConnection();
+			PreparedStatement statement = connection.prepareStatement(READ_USER_WALLET);
+			statement.setInt(1, walletId);
+			ResultSet set = statement.executeQuery();
+			if (set.next()) {
+				wallet = set.getInt(1);
+			}
+			connectionPool.closeConnection(connection, statement, set);
+		} catch (SQLException e) {
+			throw new DAOException("db problem", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("connection pool problem", e);
+		}
+		return wallet;
 	}
 		
 }

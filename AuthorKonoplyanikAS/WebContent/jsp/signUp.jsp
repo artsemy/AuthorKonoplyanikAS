@@ -23,6 +23,8 @@
 			<input type="text" name="login" value="" /> <br />
 			<fmt:message key="label.insertPassword" /> <br />
 			<input type="text" name="password" value="" /> <br />
+			<fmt:message key="label.insertName" /> <br />
+			<input type="text" name="name" value="" /> <br />
 			<input type="submit" name="sign_up" value="<fmt:message key="label.signUp" />" /> <br />
 		</form>
 	</div>
