@@ -24,6 +24,7 @@ public class PreAddIngredient implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addExtraToDrinkStore(request);
+		countPrice(request);
 		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.DRINK_PAGE);
 		dispatcher.forward(request, response);
 	}
@@ -60,6 +61,15 @@ public class PreAddIngredient implements Command{
 		}
 		extraStore.setExtraMenuItem(extraMenuItem);
 		return extraStore;
+	}
+	
+	private void countPrice(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		DrinkStore drinkStore = (DrinkStore) session.getAttribute(ControllerConstant.DRINK_STORE);
+		ServiceFactory serviceFactory = ServiceFactory.getInstance();
+		MenuService menuService = serviceFactory.getMenuService();
+		int price = menuService.countPrice(drinkStore);
+		request.setAttribute(ControllerConstant.PRICE, price);
 	}
 
 }

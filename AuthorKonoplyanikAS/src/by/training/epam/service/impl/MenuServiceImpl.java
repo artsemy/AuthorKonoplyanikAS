@@ -3,7 +3,10 @@ package by.training.epam.service.impl;
 import java.util.List;
 
 import by.training.epam.bean.DrinkMenuItem;
+import by.training.epam.bean.DrinkStore;
 import by.training.epam.bean.ExtraMenuItem;
+import by.training.epam.bean.ExtraStore;
+import by.training.epam.bean.OrderStore;
 import by.training.epam.dao.DAOException;
 import by.training.epam.dao.DAOFactory;
 import by.training.epam.dao.MenuDAO;
@@ -49,6 +52,35 @@ public class MenuServiceImpl implements MenuService{
 			throw new ServiceException(e);
 		}
 		return drinkMenuItem;
+	}
+
+	@Override
+	public int countPrice(OrderStore orderStore) {
+		int price = 0;
+		if (orderStore != null) {
+			List<DrinkStore> drinks = orderStore.getDrinks();
+			if(drinks != null) {
+				for (DrinkStore drinkStore : drinks) {
+					price += countPrice(drinkStore);
+				}
+			}
+		}
+		return price;
+	}
+
+	@Override
+	public int countPrice(DrinkStore drinkStore) {
+		int price = 0;
+		if (drinkStore != null) {
+			price += drinkStore.getDrinkMenuItem().getPrice();
+			List<ExtraStore> extras = drinkStore.getExtra();
+			if(extras != null) {
+				for (ExtraStore extra : extras) {
+					price += extra.getExtraMenuItem().getPrice();
+				}
+			}
+		}
+		return price;
 	}
 
 }

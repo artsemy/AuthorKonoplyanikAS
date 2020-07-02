@@ -14,19 +14,21 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<br />
 	<div class="bloc">
-		<h3>${sessionScope.drink_store.drinkMenuItem.title}</h3>
-			<table>
-			<c:forEach var="item" items="${sessionScope.drink_store.extra}">
-					<form action="ServletForJsp" method="post">
-						<input type="hidden" name="command" value="remove_ingredient">
-						<tr>
-							<td>${item.extraMenuItem.title}</td>
-							<td><input type="submit" name="remove_ingredient" value="-"></td>
-							<td><input type="hidden" name="ingredient_remove_id" value="${item.id}"></td>
-						</tr>
-					</form>
-			</c:forEach>
-			</table>
+		<h3>${sessionScope.drink_store.drinkMenuItem.title} ${sessionScope.drink_store.drinkMenuItem.price}</h3>
+		<table>
+		<c:forEach var="item" items="${sessionScope.drink_store.extra}">
+				<form action="ServletForJsp" method="post">
+					<input type="hidden" name="command" value="remove_ingredient">
+					<tr>
+						<td>${item.extraMenuItem.title}</td>
+						<td>${item.extraMenuItem.price}</td>
+						<td><input type="submit" name="remove_ingredient" value="-"></td>
+						<td><input type="hidden" name="ingredient_remove_id" value="${item.id}"></td>
+					</tr>
+				</form>
+		</c:forEach>
+		</table>
+		<h3>total:${requestScope.price}</h3>
 		<form action="ServletForJsp" method="post">
 			<select name="ingredient_id">
 				<option value="1">сахар</option>

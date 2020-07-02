@@ -27,6 +27,7 @@ public class ControllerConstant {
 	public static final String LOGIN = "login";
 	public static final String PASSWORD = "password";
 	public static final String NAME = "name";
+	public static final String PRICE = "price";
 	//page url
 	public static final String MAIN_PAGE = "main.jsp";
 	public static final String SIGN_IN_PAGE = "signIn.jsp";

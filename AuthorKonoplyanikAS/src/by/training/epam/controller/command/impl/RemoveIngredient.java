@@ -13,12 +13,15 @@ import by.training.epam.bean.DrinkStore;
 import by.training.epam.bean.ExtraStore;
 import by.training.epam.controller.ControllerConstant;
 import by.training.epam.controller.command.Command;
+import by.training.epam.service.MenuService;
+import by.training.epam.service.ServiceFactory;
 
 public class RemoveIngredient implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		removeExtra(request);
+		countPrice(request);
 		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.DRINK_PAGE);
 		dispatcher.forward(request, response);
 	}
@@ -34,6 +37,15 @@ public class RemoveIngredient implements Command{
 				break;
 			}
 		}
+	}
+	
+	private void countPrice(HttpServletRequest request) {
+		HttpSession httpSession = request.getSession();
+		DrinkStore drinkStore = (DrinkStore) httpSession.getAttribute(ControllerConstant.DRINK_STORE);
+		ServiceFactory serviceFactory = ServiceFactory.getInstance();
+		MenuService menuService = serviceFactory.getMenuService();
+		int price = menuService.countPrice(drinkStore);
+		request.setAttribute(ControllerConstant.PRICE, price);
 	}
 
 }
