@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import by.training.epam.bean.Drink;
+import by.training.epam.bean.DrinkMenuItem;
 import by.training.epam.bean.DrinkStore;
 import by.training.epam.controller.ControllerConstant;
 import by.training.epam.controller.command.Command;
+import by.training.epam.service.MenuService;
+import by.training.epam.service.ServiceException;
+import by.training.epam.service.ServiceFactory;
 
 public class PreAddDrink implements Command{
 
@@ -29,17 +32,23 @@ public class PreAddDrink implements Command{
 	}
 	
 	private DrinkStore buildDrinkStore(HttpServletRequest request) {
-		Drink drink = buildDrink(request);
+		DrinkMenuItem drinkMenuItem = readDrinkMenuItem(request);
 		DrinkStore drinkStore = new DrinkStore();
-		drinkStore.setDrink(drink);
+		drinkStore.setDrinkMenuItem(drinkMenuItem);
 		return drinkStore;
 	}
 	
-	private Drink buildDrink(HttpServletRequest request) {
-		Drink drink = new Drink();
+	private DrinkMenuItem readDrinkMenuItem(HttpServletRequest request) {
+		DrinkMenuItem drinkMenuItem;
 		int drinkMenuId = Integer.parseInt(request.getParameter(ControllerConstant.COFFEE_ID));
-		drink.setDrinkMenuId(drinkMenuId);
-		return drink;
+		ServiceFactory serviceFactory = ServiceFactory.getInstance();
+		MenuService menuService = serviceFactory.getMenuService();
+		try {
+			drinkMenuItem = menuService.readDrinkMenuItem(drinkMenuId);
+		} catch (ServiceException e) {
+			drinkMenuItem = null;
+		}
+		return drinkMenuItem;
 	}
 	
 }

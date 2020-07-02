@@ -1,57 +1,57 @@
 package by.training.epam.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DrinkStore implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Drink drink;
-	private List<DrinkIngredient> ingredients;
+	private int id;
+	private DrinkMenuItem drinkMenuItem;
+	private List<ExtraStore> extra;
 	
-	public DrinkStore() {
-		drink = new Drink();
-		ingredients = new ArrayList<DrinkIngredient>();
+	public DrinkStore() {}
+
+	public DrinkStore(int id, DrinkMenuItem drinkMenuItem, List<ExtraStore> extra) {
+		this.id = id;
+		this.drinkMenuItem = drinkMenuItem;
+		this.extra = extra;
 	}
 
-
-	public DrinkStore(Drink drink, List<DrinkIngredient> ingredients) {
-		this.drink = drink;
-		this.ingredients = ingredients;
+	public int getId() {
+		return id;
 	}
 
-
-	public Drink getDrink() {
-		return drink;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-
-	public void setDrink(Drink drink) {
-		this.drink = drink;
+	public DrinkMenuItem getDrinkMenuItem() {
+		return drinkMenuItem;
 	}
 
-
-	public List<DrinkIngredient> getIngredients() {
-		return ingredients;
+	public void setDrinkMenuItem(DrinkMenuItem drinkMenuItem) {
+		this.drinkMenuItem = drinkMenuItem;
 	}
 
-
-	public void setIngredients(List<DrinkIngredient> ingredients) {
-		this.ingredients = ingredients;
+	public List<ExtraStore> getExtra() {
+		return extra;
 	}
 
+	public void setExtra(List<ExtraStore> extra) {
+		this.extra = extra;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((drink == null) ? 0 : drink.hashCode());
-		result = prime * result + ((ingredients == null) ? 0 : ingredients.hashCode());
+		result = prime * result + ((drinkMenuItem == null) ? 0 : drinkMenuItem.hashCode());
+		result = prime * result + ((extra == null) ? 0 : extra.hashCode());
+		result = prime * result + id;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -62,23 +62,24 @@ public class DrinkStore implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		DrinkStore other = (DrinkStore) obj;
-		if (drink == null) {
-			if (other.drink != null)
+		if (drinkMenuItem == null) {
+			if (other.drinkMenuItem != null)
 				return false;
-		} else if (!drink.equals(other.drink))
+		} else if (!drinkMenuItem.equals(other.drinkMenuItem))
 			return false;
-		if (ingredients == null) {
-			if (other.ingredients != null)
+		if (extra == null) {
+			if (other.extra != null)
 				return false;
-		} else if (!ingredients.equals(other.ingredients))
+		} else if (!extra.equals(other.extra))
+			return false;
+		if (id != other.id)
 			return false;
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
-		return "DrinkStore [drink=" + drink + ", ingredients=" + ingredients + "]";
+		return "DrinkStore [id=" + id + ", drinkMenuItem=" + drinkMenuItem + ", extra=" + extra + "]";
 	}
-	
+
 }

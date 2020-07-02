@@ -14,23 +14,28 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<br />
 	<div class="bloc">
-		<p>drink_menu_id = ${sessionScope.drink_store.drink.drinkMenuId}</p>
+		<h3>${sessionScope.drink_store.drinkMenuItem.title}</h3>
 			<table>
-			<c:forEach var="item" items="${sessionScope.drink_store.ingredients}">
+			<c:forEach var="item" items="${sessionScope.drink_store.extra}">
 					<form action="ServletForJsp" method="post">
 						<input type="hidden" name="command" value="remove_ingredient">
 						<tr>
-							<td>${item.portionId}</td>
+							<td>${item.extraMenuItem.title}</td>
 							<td><input type="submit" name="remove_ingredient" value="-"></td>
-							<td><input type="hidden" name="ingredient_remove_id" value="${item.portionId}"></td>
+							<td><input type="hidden" name="ingredient_remove_id" value="${item.id}"></td>
 						</tr>
 					</form>
 			</c:forEach>
 			</table>
 		<form action="ServletForJsp" method="post">
 			<select name="ingredient_id">
-				<option value="1">sugar</option>
-				<option value="2">lemon</option>
+				<option value="1">сахар</option>
+				<option value="2">молоко</option>
+				<option value="3">мороженное</option>
+				<option value="4">зефир</option>
+				<option value="5">корица</option>
+				<option value="6">сливки</option>
+				<option value="7">сироп</option>
 			</select>
 			<input type="hidden" name="command" value="add_ingredient">
 			<input type="submit" name="add_ingredient" value="add" />

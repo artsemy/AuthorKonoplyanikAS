@@ -43,8 +43,7 @@ public class ControllerConstant {
 	public static final String DRINK_STORE = "drink_store";
 	public static final String COFFEE_ID = "coffee_id";
 	public static final String INGREDIENT_ID = "ingredient_id";
-	public static final String DELIVERY_END_DATE = "delivery_end_date";
-	public static final String DELIVERY_END_TIME = "delivery_end_time";
+	public static final String DELIVERY_END_DATE_TIME = "delivery_end_date_time";
 	public static final String DELIVERY_TYPE = "delivery_type";
 	public static final String INGREDIENT_REMOVE_ID = "ingredient_remove_id";
 	public static final String DRINK_REMOVE_ID = "drink_remove_id";

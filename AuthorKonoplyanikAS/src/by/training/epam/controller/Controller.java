@@ -12,9 +12,9 @@ import by.training.epam.controller.command.CommandFactory;
 public class Controller {
 	
 	public void run(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cName = request.getParameter(ControllerConstant.COMMAND);
+		String sCommand = request.getParameter(ControllerConstant.COMMAND);
 		CommandFactory factory = new CommandFactory();
-		Command command = factory.getCommand(cName);
+		Command command = factory.getCommand(sCommand);
 		command.execute(request, response);
 	}
 	

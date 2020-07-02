@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import by.training.epam.bean.Delivery;
-import by.training.epam.bean.Order;
 import by.training.epam.bean.OrderStore;
 import by.training.epam.controller.ControllerConstant;
 import by.training.epam.controller.command.Command;
@@ -32,6 +31,7 @@ public class PushOrder implements Command{
 		}
 		setRequestAttribute(request); //fix
 		clearSessionAttribute(request);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.MAIN_PAGE);
 		dispatcher.forward(request, response);
 	}
@@ -53,10 +53,10 @@ public class PushOrder implements Command{
 		delivery.setStatus("start");
 		Date start = new Date();
 		delivery.setStart(convertDate(start));
-		String endDate = request.getParameter(ControllerConstant.DELIVERY_END_DATE);
+		String endDate = request.getParameter(ControllerConstant.DELIVERY_END_DATE_TIME);
 		Date end;
 		try {
-			end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+			end = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse(endDate);
 		} catch (ParseException e) {
 			end = start;
 		}

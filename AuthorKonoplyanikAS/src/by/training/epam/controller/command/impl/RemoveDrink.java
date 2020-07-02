@@ -24,14 +24,13 @@ public class RemoveDrink implements Command{
 	}
 	
 	private void removeDrink(HttpServletRequest request) {
-		String drinkStore = request.getParameter(ControllerConstant.DRINK_REMOVE_ID);
+		int drinkStoreId = Integer.parseInt(request.getParameter(ControllerConstant.DRINK_REMOVE_ID));
 		HttpSession session = request.getSession();
 		OrderStore orderStore = (OrderStore) session.getAttribute(ControllerConstant.ORDER_STORE);
 		List<DrinkStore> list = orderStore.getDrinks();
-		for (DrinkStore drinkStore2 : list) {
-			String ds2 = drinkStore2.toString();
-			if(drinkStore.compareTo(ds2) == 0) {
-				list.remove(drinkStore2);
+		for (DrinkStore drinkStore : list) {
+			if (drinkStore.getId() == drinkStoreId) {
+				list.remove(drinkStore);
 				break;
 			}
 		}

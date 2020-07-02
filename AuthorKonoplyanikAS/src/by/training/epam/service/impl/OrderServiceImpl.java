@@ -6,8 +6,10 @@ import java.util.List;
 
 import by.training.epam.bean.Delivery;
 import by.training.epam.bean.Drink;
-import by.training.epam.bean.DrinkIngredient;
+import by.training.epam.bean.DrinkExtra;
+import by.training.epam.bean.DrinkMenuItem;
 import by.training.epam.bean.DrinkStore;
+import by.training.epam.bean.ExtraStore;
 import by.training.epam.bean.Order;
 import by.training.epam.bean.OrderDrink;
 import by.training.epam.bean.OrderStore;
@@ -31,11 +33,13 @@ public class OrderServiceImpl implements OrderService {
 			DAOFactory factory = DAOFactory.getInstance();
 			OrderDAO orderDAO = factory.getOrderDAO();
 			Order order = orderStore.getOrder();
+			order = new Order(); //fix
+			orderStore.setOrder(order); //fix
 			Delivery delivery = orderStore.getDelivery();
 			List<DrinkStore> drinks = orderStore.getDrinks();
 			
-			createDelivery(delivery, orderDAO);
-			createOrder(delivery.getDeliveryId(), order, orderDAO);
+			createDelivery(delivery, orderDAO); //+
+			createOrder(delivery.getDeliveryId(), order, orderDAO); //+
 			for (DrinkStore drinkStore : drinks) {
 				addDrinkStore(drinkStore, orderDAO);
 			}
@@ -48,13 +52,18 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	private void addDrinkStore(DrinkStore drinkStore, OrderDAO orderDAO) throws DAOException {
-		Drink drink = drinkStore.getDrink();
-		List<DrinkIngredient> drinkIngredients = drinkStore.getIngredients();
+		DrinkMenuItem drinkMenuItem = drinkStore.getDrinkMenuItem();
+		Drink drink = new Drink();
+		drink.setDrinkMenuId(drinkMenuItem.getDrinkMenuId());
+		List<ExtraStore> list = drinkStore.getExtra();
 		createDrink(drink, orderDAO);
-		for (DrinkIngredient drinkIngredient : drinkIngredients) {
-			drinkIngredient.setDrinkId(drink.getDrinkId()); //add fields
-			drinkIngredient.setPortionAmount(1); //add fields
-			createIngredient(drinkIngredient, orderDAO);
+		drinkStore.setId(drink.getDrinkId()); //fix
+		for (ExtraStore extraStore : list) {
+			DrinkExtra drinkExtra = new DrinkExtra();
+			drinkExtra.setDrinkId(drink.getDrinkId());
+			drinkExtra.setExtraMenuId(extraStore.getExtraMenuItem().getExtraMenuId());
+			drinkExtra.setStatus("added"); //fix
+			createIngredient(drinkExtra, orderDAO);
 		}
 	}
 	
@@ -66,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
 		drink.setDrinkId(drinkId);
 	}
 	
-	private void createIngredient(DrinkIngredient drinkIngredient, OrderDAO orderDAO) throws DAOException {
+	private void createIngredient(DrinkExtra drinkIngredient, OrderDAO orderDAO) throws DAOException {
 		int drinkIngredientId = -1;
 		while (drinkIngredientId == -1) {
 			drinkIngredientId = orderDAO.createDrinkIngredient(drinkIngredient);
@@ -99,20 +108,19 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	private void addOrderDrink(OrderStore orderStore, OrderDAO orderDAO) throws DAOException {
-		int orderId = orderStore.getOrder().getOrderId();
+		int orderId = orderStore.getOrder().getOrderId(); //fix
 		List<DrinkStore> list = orderStore.getDrinks();
 		for (DrinkStore drinkStore : list) {
-			int drinkId = drinkStore.getDrink().getDrinkId();
-			createOrderDrink(orderId, drinkId, "start", 1, orderDAO);
+			int drinkId = drinkStore.getId();
+			createOrderDrink(orderId, drinkId, "start", orderDAO);
 		}
 	}
 	
-	private void createOrderDrink(int orderId, int drinkId, String status, int size, OrderDAO orderDAO) throws DAOException {
+	private void createOrderDrink(int orderId, int drinkId, String status, OrderDAO orderDAO) throws DAOException {
 		OrderDrink orderDrink = new OrderDrink();
 		orderDrink.setOrderId(orderId);
 		orderDrink.setDrinkId(drinkId);
 		orderDrink.setStatus(status);
-		orderDrink.setSize(size);
 		
 		int orderDrinkId = -1;
 		while(orderDrinkId == -1) {

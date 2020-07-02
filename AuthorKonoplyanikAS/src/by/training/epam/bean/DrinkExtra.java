@@ -2,38 +2,30 @@ package by.training.epam.bean;
 
 import java.io.Serializable;
 
-public class OrderDrink implements Serializable{
-	
+public class DrinkExtra implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 	
-	private int orderDrinkId;
-	private int orderId;
+	private int drinkExtraId;
 	private int drinkId;
+	private int extraMenuId;
 	private String status;
 	
-	public OrderDrink() {}
+	public DrinkExtra() {}
 
-	public OrderDrink(int orderDrinkId, int orderId, int drinkId, String status) {
-		this.orderDrinkId = orderDrinkId;
-		this.orderId = orderId;
+	public DrinkExtra(int drinkExtraId, int drinkId, int extraMenuId, String status) {
+		this.drinkExtraId = drinkExtraId;
 		this.drinkId = drinkId;
+		this.extraMenuId = extraMenuId;
 		this.status = status;
 	}
 
-	public int getOrderDrinkId() {
-		return orderDrinkId;
+	public int getDrinkExtraId() {
+		return drinkExtraId;
 	}
 
-	public void setOrderDrinkId(int orderDrinkId) {
-		this.orderDrinkId = orderDrinkId;
-	}
-
-	public int getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public void setDrinkExtraId(int drinkExtraId) {
+		this.drinkExtraId = drinkExtraId;
 	}
 
 	public int getDrinkId() {
@@ -42,6 +34,14 @@ public class OrderDrink implements Serializable{
 
 	public void setDrinkId(int drinkId) {
 		this.drinkId = drinkId;
+	}
+
+	public int getExtraMenuId() {
+		return extraMenuId;
+	}
+
+	public void setExtraMenuId(int extraMenuId) {
+		this.extraMenuId = extraMenuId;
 	}
 
 	public String getStatus() {
@@ -56,9 +56,9 @@ public class OrderDrink implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + drinkExtraId;
 		result = prime * result + drinkId;
-		result = prime * result + orderDrinkId;
-		result = prime * result + orderId;
+		result = prime * result + extraMenuId;
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
@@ -71,12 +71,12 @@ public class OrderDrink implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrderDrink other = (OrderDrink) obj;
+		DrinkExtra other = (DrinkExtra) obj;
+		if (drinkExtraId != other.drinkExtraId)
+			return false;
 		if (drinkId != other.drinkId)
 			return false;
-		if (orderDrinkId != other.orderDrinkId)
-			return false;
-		if (orderId != other.orderId)
+		if (extraMenuId != other.extraMenuId)
 			return false;
 		if (status == null) {
 			if (other.status != null)
@@ -88,7 +88,7 @@ public class OrderDrink implements Serializable{
 
 	@Override
 	public String toString() {
-		return "OrderDrink [orderDrinkId=" + orderDrinkId + ", orderId=" + orderId + ", drinkId=" + drinkId
+		return "DrinkExtra [drinkExtraId=" + drinkExtraId + ", drinkId=" + drinkId + ", extraMenuId=" + extraMenuId
 				+ ", status=" + status + "]";
 	}
 	

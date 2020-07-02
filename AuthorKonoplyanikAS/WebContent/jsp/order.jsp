@@ -18,12 +18,12 @@
 			<form action="ServletForJsp" method="post">
 				<input type="hidden" name="command" value="remove_drink">
 				<p>
-					${drink.drink.drinkMenuId}
+					${drink.drinkMenuItem.title}
 					<input type="submit" name="remove_drink" value="-">
-					<input type="hidden" name="drink_remove_id" value="${drink}">
+					<input type="hidden" name="drink_remove_id" value="${drink.id}">
 				</p>
-				<c:forEach var="ingredient" items="${drink.ingredients}">
-				<p>${ingredient.portionId}</p>
+				<c:forEach var="ingredient" items="${drink.extra}">
+				<p>${ingredient.extraMenuItem.title}</p>
 				</c:forEach>
 			</form>
 			<br>
@@ -35,8 +35,7 @@
 				<option value="2">car</option>
 			</select>
 			<input type="hidden" name="command" value="push_order" >
-			<input type="date" name="delivery_end_date">
-			<input type="time" name="delivery_end_time">
+			<input type="datetime-local" name="delivery_end_date_time">
 			<input type="submit" name="push_order" value="send order">
 		</form>
 	</div>

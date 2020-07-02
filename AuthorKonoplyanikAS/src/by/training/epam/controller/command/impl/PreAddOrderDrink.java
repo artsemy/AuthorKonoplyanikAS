@@ -1,6 +1,8 @@
 package by.training.epam.controller.command.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,7 +27,14 @@ public class PreAddOrderDrink implements Command {
 	private void saveOrderStoreToSession(HttpServletRequest request) {
 		OrderStore orderStore = getOrderStoreFromSession(request);
 		DrinkStore drinkStore = getDrinkStoreFromSession(request);
-		orderStore.getDrinks().add(drinkStore);
+		List<DrinkStore> drinks = orderStore.getDrinks();
+		if (drinks == null) {
+			drinks = new ArrayList<DrinkStore>();
+			orderStore.setDrinks(drinks);
+		}
+		int id = drinks.size() + 1; //fix
+		drinkStore.setId(id);
+		drinks.add(drinkStore);
 	}
 	
 	private OrderStore getOrderStoreFromSession(HttpServletRequest request) {

@@ -10,6 +10,7 @@
 
 .menu-item{
 	width: 100%;
+	text-align: center;
 }
 
 .clear{
@@ -22,5 +23,9 @@ body{
 
 .bloc{
 	background-color: rgba(139, 69, 19, .7);
+}
+
+td{
+	text-align: center;
 }
 

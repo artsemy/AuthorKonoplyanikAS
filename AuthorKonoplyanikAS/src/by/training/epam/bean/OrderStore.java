@@ -1,27 +1,32 @@
 package by.training.epam.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderStore implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	private int id;
 	private Order order;
 	private Delivery delivery;
 	private List<DrinkStore> drinks;
 	
-	public OrderStore() {
-		order = new Order();
-		delivery = new Delivery();
-		drinks = new ArrayList<DrinkStore>();
-	}
+	public OrderStore() {}
 
-	public OrderStore(Order order, Delivery delivery, List<DrinkStore> drinks) {
+	public OrderStore(int id, Order order, Delivery delivery, List<DrinkStore> drinks) {
+		this.id = id;
 		this.order = order;
 		this.delivery = delivery;
 		this.drinks = drinks;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Order getOrder() {
@@ -54,6 +59,7 @@ public class OrderStore implements Serializable {
 		int result = 1;
 		result = prime * result + ((delivery == null) ? 0 : delivery.hashCode());
 		result = prime * result + ((drinks == null) ? 0 : drinks.hashCode());
+		result = prime * result + id;
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
 		return result;
 	}
@@ -77,6 +83,8 @@ public class OrderStore implements Serializable {
 				return false;
 		} else if (!drinks.equals(other.drinks))
 			return false;
+		if (id != other.id)
+			return false;
 		if (order == null) {
 			if (other.order != null)
 				return false;
@@ -87,7 +95,7 @@ public class OrderStore implements Serializable {
 
 	@Override
 	public String toString() {
-		return "OrderStore [order=" + order + ", delivery=" + delivery + ", drinks=" + drinks + "]";
+		return "OrderStore [id=" + id + ", order=" + order + ", delivery=" + delivery + ", drinks=" + drinks + "]";
 	}
 
 }
