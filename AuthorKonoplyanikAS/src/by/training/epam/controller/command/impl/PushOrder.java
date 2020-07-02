@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import by.training.epam.bean.Delivery;
 import by.training.epam.bean.OrderStore;
+import by.training.epam.bean.UserStore;
 import by.training.epam.controller.ControllerConstant;
 import by.training.epam.controller.command.Command;
 import by.training.epam.service.OrderService;
@@ -39,10 +40,20 @@ public class PushOrder implements Command{
 	private void saveOrderToDB(HttpServletRequest request) throws ServiceException {
 		HttpSession session = request.getSession();
 		OrderStore orderStore = (OrderStore) session.getAttribute(ControllerConstant.ORDER_STORE);
+		UserStore userStore = (UserStore) session.getAttribute(ControllerConstant.USER_STORE);
 		buildDelivery(request);
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		OrderService orderService = serviceFactory.getOrderService();
+		checkWallet(userStore, orderStore, orderService);
 		orderService.createOrder(orderStore);
+	}
+	
+	private void checkWallet(UserStore userStore, OrderStore orderStore, OrderService orderService) throws ServiceException {
+		if(userStore == null || orderStore == null) {
+			throw new ServiceException();
+		}
+		int wallet = orderService.checkWallet(userStore.getWallet(), orderStore.getOrder().getPrice());
+		userStore.setWallet(wallet);
 	}
 	
 	private void buildDelivery(HttpServletRequest request) {

@@ -6,6 +6,7 @@ import by.training.epam.bean.DrinkMenuItem;
 import by.training.epam.bean.DrinkStore;
 import by.training.epam.bean.ExtraMenuItem;
 import by.training.epam.bean.ExtraStore;
+import by.training.epam.bean.Order;
 import by.training.epam.bean.OrderStore;
 import by.training.epam.dao.DAOException;
 import by.training.epam.dao.DAOFactory;
@@ -81,6 +82,18 @@ public class MenuServiceImpl implements MenuService{
 			}
 		}
 		return price;
+	}
+
+	@Override
+	public void setOrderPrice(OrderStore orderStore, int price) {
+		if(orderStore != null) {
+			Order order = orderStore.getOrder();
+			if(order == null) {
+				order = new Order();
+				orderStore.setOrder(order);
+			}
+			order.setPrice(price);
+		}
 	}
 
 }

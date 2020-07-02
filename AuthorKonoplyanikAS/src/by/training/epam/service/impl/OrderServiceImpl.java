@@ -128,4 +128,14 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
+	@Override
+	public int checkWallet(int wallet, int price) throws ServiceException {
+		int resultWallet;
+		if (wallet < price) {
+			throw new ServiceException();
+		}
+		resultWallet = wallet - price;
+		return resultWallet;
+	}
+
 }

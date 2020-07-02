@@ -12,4 +12,6 @@ public interface OrderService {
 	public void addDrink(OrderStore orderStore, Drink drink);
 	
 	public void createOrder(OrderStore orderStore) throws ServiceException;
+	
+	public int checkWallet(int wallet, int price) throws ServiceException;
 }

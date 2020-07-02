@@ -45,6 +45,7 @@ public class RemoveDrink implements Command{
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		MenuService menuService = serviceFactory.getMenuService();
 		int price = menuService.countPrice(orderStore);
+		menuService.setOrderPrice(orderStore, price);
 		request.setAttribute(ControllerConstant.PRICE, price);
 	}
 

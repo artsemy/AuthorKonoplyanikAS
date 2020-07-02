@@ -15,5 +15,6 @@ public interface MenuService {
 	
 	public int countPrice(OrderStore orderStore);
 	public int countPrice(DrinkStore drinkStore);
+	public void setOrderPrice(OrderStore orderStore, int price);
 
 }
