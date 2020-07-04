@@ -9,32 +9,37 @@ import by.training.epam.bean.Drink;
 import by.training.epam.bean.DrinkExtra;
 import by.training.epam.bean.DrinkMenuItem;
 import by.training.epam.bean.DrinkStore;
+import by.training.epam.bean.ExtraMenuItem;
 import by.training.epam.bean.ExtraStore;
 import by.training.epam.bean.Order;
 import by.training.epam.bean.OrderDrink;
 import by.training.epam.bean.OrderStore;
+import by.training.epam.bean.UserStore;
 import by.training.epam.dao.DAOException;
 import by.training.epam.dao.DAOFactory;
+import by.training.epam.dao.MenuDAO;
 import by.training.epam.dao.OrderDAO;
+import by.training.epam.dao.UserDAO;
 import by.training.epam.service.OrderService;
 import by.training.epam.service.ServiceException;
 
 public class OrderServiceImpl implements OrderService {
-
-	@Override
-	public void addDrink(OrderStore orderStore, Drink drink) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	@Override
-	public void createOrder(OrderStore orderStore) throws ServiceException {
+	public void createOrder(OrderStore orderStore, UserStore userStore) throws ServiceException {
+		if (userStore == null || orderStore == null) {
+			throw new ServiceException();
+		}
 		try {
 			DAOFactory factory = DAOFactory.getInstance();
 			OrderDAO orderDAO = factory.getOrderDAO();
+			UserDAO userDAO = factory.getUserDAO();
+			
+			int balance = checkWallet(orderStore, userStore);
+			int walletId = userDAO.readWalletId(userStore.getId());
+			userDAO.updateWallet(walletId, balance);
+			
 			Order order = orderStore.getOrder();
-			order = new Order(); //fix
-			orderStore.setOrder(order); //fix
 			Delivery delivery = orderStore.getDelivery();
 			List<DrinkStore> drinks = orderStore.getDrinks();
 			
@@ -51,6 +56,16 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 	
+	private int checkWallet(OrderStore orderStore, UserStore userStore) throws ServiceException {
+		int balance = userStore.getBalance();
+		int price = orderStore.getOrder().getPrice();
+		if (balance < price) {
+			throw new ServiceException();
+		}
+		int resultWallet = balance - price;
+		return resultWallet;
+	}
+	
 	private void addDrinkStore(DrinkStore drinkStore, OrderDAO orderDAO) throws DAOException {
 		DrinkMenuItem drinkMenuItem = drinkStore.getDrinkMenuItem();
 		Drink drink = new Drink();
@@ -58,12 +73,14 @@ public class OrderServiceImpl implements OrderService {
 		List<ExtraStore> list = drinkStore.getExtra();
 		createDrink(drink, orderDAO);
 		drinkStore.setId(drink.getDrinkId()); //fix
-		for (ExtraStore extraStore : list) {
-			DrinkExtra drinkExtra = new DrinkExtra();
-			drinkExtra.setDrinkId(drink.getDrinkId());
-			drinkExtra.setExtraMenuId(extraStore.getExtraMenuItem().getExtraMenuId());
-			drinkExtra.setStatus("added"); //fix
-			createIngredient(drinkExtra, orderDAO);
+		if(list != null) {
+			for (ExtraStore extraStore : list) {
+				DrinkExtra drinkExtra = new DrinkExtra();
+				drinkExtra.setDrinkId(drink.getDrinkId());
+				drinkExtra.setExtraMenuId(extraStore.getExtraMenuItem().getExtraMenuId());
+				drinkExtra.setStatus("added"); //fix
+				createIngredient(drinkExtra, orderDAO);
+			}
 		}
 	}
 	
@@ -95,7 +112,6 @@ public class OrderServiceImpl implements OrderService {
 		Date date =  new Date(date2.getTime()); //fix
 		order.setOpenDate(date); //fix
 		order.setCloseDate(date); //fix
-		order.setPrice(333); //fix
 		order.setStatus("start"); //fix
 		order.setDeliveryId(deliveryId); //fix
 		order.setUserId(1); //fix
@@ -129,13 +145,55 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int checkWallet(int wallet, int price) throws ServiceException {
-		int resultWallet;
-		if (wallet < price) {
-			throw new ServiceException();
+	public OrderStore readLastOrder() {
+		OrderStore orderStore = new OrderStore();
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			Order order = orderDAO.readLastOrder();
+			orderStore.setOrder(order);
+			Delivery delivery = orderDAO.readDelivery(order.getDeliveryId());
+			orderStore.setDelivery(delivery);
+			List<DrinkStore> drinks = readDrinks(order.getOrderId());
+			orderStore.setDrinks(drinks);
+		} catch (DAOException e) {
+			//fix
 		}
-		resultWallet = wallet - price;
-		return resultWallet;
+		
+		return orderStore;
 	}
-
+	
+	private List<DrinkStore> readDrinks(int orderId) throws DAOException {
+		List<DrinkStore> drinkStores = new ArrayList<DrinkStore>();
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		OrderDAO orderDAO = daoFactory.getOrderDAO();
+		MenuDAO menuDAO = daoFactory.getMenuDAO();
+		List<Drink> drinks = orderDAO.readDrinkByOrder(orderId);
+		for (Drink drink : drinks) {
+			DrinkStore drinkStore = new DrinkStore();
+			drinkStore.setId(drink.getDrinkId());
+			DrinkMenuItem drinkMenuItem = menuDAO.readDrinkMenuItem(drink.getDrinkMenuId());
+			drinkStore.setDrinkMenuItem(drinkMenuItem);
+			List<ExtraStore> extraStores = readExtras(drink.getDrinkId());
+			drinkStore.setExtra(extraStores);
+			drinkStores.add(drinkStore);
+		}
+		return drinkStores;
+	}
+	
+	private List<ExtraStore> readExtras(int drinkId) throws DAOException {
+		List<ExtraStore> extraStores = new ArrayList<ExtraStore>();
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		OrderDAO orderDAO = daoFactory.getOrderDAO();
+		MenuDAO menuDAO = daoFactory.getMenuDAO();
+		List<DrinkExtra> drinkExtras = orderDAO.readDrinkIngredient(drinkId);
+		for (DrinkExtra drinkExtra : drinkExtras) {
+			ExtraStore extraStore = new ExtraStore();
+			extraStore.setId(drinkExtra.getDrinkExtraId());
+			ExtraMenuItem extraMenuItem = menuDAO.readExtraMenuItem(drinkExtra.getExtraMenuId());
+			extraStore.setExtraMenuItem(extraMenuItem);
+			extraStores.add(extraStore);
+		}
+		return extraStores;
+	}
 }

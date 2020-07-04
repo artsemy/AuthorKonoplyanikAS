@@ -31,4 +31,6 @@ public interface OrderDAO {
 	public boolean deleteOrderDrink(int orderDrinkId) throws DAOException;
 	public boolean deleteDelivery(int deliveryId) throws DAOException;
 	
+	public Order readLastOrder() throws DAOException;
+	
 }

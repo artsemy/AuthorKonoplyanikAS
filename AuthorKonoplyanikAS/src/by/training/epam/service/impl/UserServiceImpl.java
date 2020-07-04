@@ -53,8 +53,9 @@ public class UserServiceImpl implements UserService{
 			UserDAO userDAO = daoFactory.getUserDAO();
 			String name = user.getName();
 			String role = userDAO.readRole(user.getRoleId());
-			int wallet = userDAO.readWallet(user.getWalletId());
-			userStore = new UserStore(name, role, wallet);
+			int wallet = userDAO.readBalance(user.getWalletId());
+			int id = user.getUserId();
+			userStore = new UserStore(name, role, wallet, id);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}

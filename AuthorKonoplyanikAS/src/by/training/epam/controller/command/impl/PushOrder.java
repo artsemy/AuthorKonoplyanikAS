@@ -24,16 +24,15 @@ public class PushOrder implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String url;
 		try {
 			saveOrderToDB(request);
+			clearSessionAttribute(request);
+			url = ControllerConstant.MAIN_PAGE;
 		} catch (ServiceException e) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.ERROR_PAGE);
-			dispatcher.forward(request, response);
+			url = ControllerConstant.ERROR_PAGE;
 		}
-		setRequestAttribute(request); //fix
-		clearSessionAttribute(request);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.MAIN_PAGE);
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}
 	
@@ -41,27 +40,16 @@ public class PushOrder implements Command{
 		HttpSession session = request.getSession();
 		OrderStore orderStore = (OrderStore) session.getAttribute(ControllerConstant.ORDER_STORE);
 		UserStore userStore = (UserStore) session.getAttribute(ControllerConstant.USER_STORE);
-		buildDelivery(request);
+		setDelivery(request, orderStore);
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		OrderService orderService = serviceFactory.getOrderService();
-		checkWallet(userStore, orderStore, orderService);
-		orderService.createOrder(orderStore);
+		orderService.createOrder(orderStore, userStore);
 	}
 	
-	private void checkWallet(UserStore userStore, OrderStore orderStore, OrderService orderService) throws ServiceException {
-		if(userStore == null || orderStore == null) {
-			throw new ServiceException();
-		}
-		int wallet = orderService.checkWallet(userStore.getWallet(), orderStore.getOrder().getPrice());
-		userStore.setWallet(wallet);
-	}
-	
-	private void buildDelivery(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		OrderStore orderStore = (OrderStore) session.getAttribute(ControllerConstant.ORDER_STORE);
-		orderStore.setDelivery(new Delivery()); // fix
-		Delivery delivery = orderStore.getDelivery();
-		delivery.setStatus("start");
+	private void setDelivery(HttpServletRequest request, OrderStore orderStore) {
+		Delivery delivery = new Delivery();
+		orderStore.setDelivery(delivery);
+		delivery.setStatus("added");
 		Date start = new Date();
 		delivery.setStart(convertDate(start));
 		String endDate = request.getParameter(ControllerConstant.DELIVERY_END_DATE_TIME);
@@ -85,12 +73,6 @@ public class PushOrder implements Command{
 		HttpSession session = request.getSession();
 		session.removeAttribute(ControllerConstant.DRINK_STORE);
 		session.removeAttribute(ControllerConstant.ORDER_STORE);
-	}
-	
-	private void setRequestAttribute(HttpServletRequest request) { //fix
-		HttpSession session = request.getSession();
-		OrderStore orderStore = (OrderStore) session.getAttribute(ControllerConstant.ORDER_STORE);
-		request.setAttribute("active_order_store", orderStore);
 	}
 	
 }

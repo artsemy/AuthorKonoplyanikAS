@@ -28,4 +28,13 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <filter>
+  	<filter-name>FilterMainPage</filter-name>
+  	<filter-class>by.training.epam.FilterMainPage</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>FilterMainPage</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
 </web-app>

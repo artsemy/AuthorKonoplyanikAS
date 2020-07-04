@@ -37,7 +37,7 @@ public class PreAddIngredient implements Command{
 			list = new ArrayList<ExtraStore>();
 			drinkStore.setExtra(list);
 		}
-		int id = list.size() + 1; //fix
+		int id = getNextId(list);
 		extraStore.setId(id);
 		list.add(extraStore);
 	}
@@ -57,7 +57,7 @@ public class PreAddIngredient implements Command{
 		try {
 			extraMenuItem = menuService.readExtraMenuItem(extraMenuId);
 		} catch (ServiceException e) {
-			extraMenuItem = null;
+			extraMenuItem = null; //fix
 		}
 		extraStore.setExtraMenuItem(extraMenuItem);
 		return extraStore;
@@ -70,6 +70,10 @@ public class PreAddIngredient implements Command{
 		MenuService menuService = serviceFactory.getMenuService();
 		int price = menuService.countPrice(drinkStore);
 		request.setAttribute(ControllerConstant.PRICE, price);
+	}
+	
+	private int getNextId(List<ExtraStore> list) {
+		return list.get(list.size()).getId() + 1;
 	}
 
 }

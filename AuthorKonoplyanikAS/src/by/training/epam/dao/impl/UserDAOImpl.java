@@ -22,6 +22,9 @@ public class UserDAOImpl implements UserDAO {
 	private static final String CREATE_USER = "insert into user values(?, ?, ?, ?, ?, ?)";
 	private static final String CREATE_WALLET = "insert into wallet values(?, ?)"; //add
 	
+	private static final String READ_WALLET_ID = "select `wallet-id` from wallet where `user-id` = ?";
+	private static final String UPDATE_WALLET = "update wallet set balance = ? where `wallet-id` = ?";
+	
 	@Override
 	public User readUser(String login) throws DAOException {
 		User resultUser = null;
@@ -117,7 +120,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public int readWallet(int walletId) throws DAOException {
+	public int readBalance(int walletId) throws DAOException {
 		int wallet = 0;
 		try {
 			ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -135,6 +138,46 @@ public class UserDAOImpl implements UserDAO {
 			throw new DAOException("connection pool problem", e);
 		}
 		return wallet;
+	}
+	
+	
+
+	@Override
+	public int readWalletId(int userId) throws DAOException {
+		int walletId = -1; //fix
+		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.takeConnection();
+			PreparedStatement statement = connection.prepareStatement(READ_WALLET_ID);
+			statement.setInt(1, userId);
+			ResultSet set = statement.executeQuery();
+			if (set.next()) {
+				walletId = set.getInt(1);
+			}
+			connectionPool.closeConnection(connection, statement, set);
+		} catch (SQLException e) {
+			throw new DAOException("db problem", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("connection pool problem", e);
+		}
+		return walletId;
+	}
+
+	@Override
+	public void updateWallet(int walletId, int balance) throws DAOException {
+		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.takeConnection();
+			PreparedStatement statement = connection.prepareStatement(UPDATE_WALLET);
+			statement.setInt(1, balance);
+			statement.setInt(2, walletId);
+			statement.executeUpdate();
+			connectionPool.closeConnection(connection, statement);
+		} catch (SQLException e) {
+			throw new DAOException("db problem", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("connection pool problem", e);
+		}
 	}
 		
 }

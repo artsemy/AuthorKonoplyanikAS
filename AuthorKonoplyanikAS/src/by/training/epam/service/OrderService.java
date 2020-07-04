@@ -1,17 +1,12 @@
 package by.training.epam.service;
 
-import by.training.epam.bean.Delivery;
-import by.training.epam.bean.Drink;
-import by.training.epam.bean.DrinkExtra;
-import by.training.epam.bean.DrinkStore;
-import by.training.epam.bean.Order;
 import by.training.epam.bean.OrderStore;
+import by.training.epam.bean.UserStore;
 
 public interface OrderService {
 	
-	public void addDrink(OrderStore orderStore, Drink drink);
+	public void createOrder(OrderStore orderStore, UserStore userStore) throws ServiceException;
 	
-	public void createOrder(OrderStore orderStore) throws ServiceException;
+	public OrderStore readLastOrder(); //fix
 	
-	public int checkWallet(int wallet, int price) throws ServiceException;
 }

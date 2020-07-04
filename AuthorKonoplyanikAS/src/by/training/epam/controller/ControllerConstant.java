@@ -42,6 +42,7 @@ public class ControllerConstant {
 	public static final String USER_STORE = "user_store";
 	public static final String ORDER_STORE = "order_store";
 	public static final String DRINK_STORE = "drink_store";
+	public static final String ACTIVE_ORDER_STORE = "active_order_store";
 	public static final String COFFEE_ID = "coffee_id";
 	public static final String INGREDIENT_ID = "ingredient_id";
 	public static final String DELIVERY_END_DATE_TIME = "delivery_end_date_time";

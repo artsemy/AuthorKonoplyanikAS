@@ -20,15 +20,17 @@ public class PreAddDrink implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		saveDrinkStoreToSession(request);
+		DrinkStore drinkStore = saveDrinkStoreToSession(request);
+		countPrice(request, drinkStore);
 		RequestDispatcher dispatcher = request.getRequestDispatcher(ControllerConstant.DRINK_PAGE);
 		dispatcher.forward(request, response);
 	}
 	
-	private void saveDrinkStoreToSession(HttpServletRequest request) {
+	private DrinkStore saveDrinkStoreToSession(HttpServletRequest request) {
 		DrinkStore drinkStore = buildDrinkStore(request);
 		HttpSession session = request.getSession();
 		session.setAttribute(ControllerConstant.DRINK_STORE, drinkStore);
+		return drinkStore;
 	}
 	
 	private DrinkStore buildDrinkStore(HttpServletRequest request) {
@@ -46,9 +48,14 @@ public class PreAddDrink implements Command{
 		try {
 			drinkMenuItem = menuService.readDrinkMenuItem(drinkMenuId);
 		} catch (ServiceException e) {
-			drinkMenuItem = null;
+			drinkMenuItem = null; //fix
 		}
 		return drinkMenuItem;
+	}
+	
+	private void countPrice(HttpServletRequest request, DrinkStore drinkStore) {
+		int price = drinkStore.getDrinkMenuItem().getPrice();
+		request.setAttribute(ControllerConstant.PRICE, price);
 	}
 	
 }

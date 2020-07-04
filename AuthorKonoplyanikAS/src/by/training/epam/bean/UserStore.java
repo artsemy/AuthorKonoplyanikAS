@@ -8,14 +8,16 @@ public class UserStore implements Serializable{
 	
 	private String name;
 	private String role;
-	private int wallet;
+	private int balance;
+	private int id;
 	
 	public UserStore() {}
 
-	public UserStore(String name, String role, int wallet) {
+	public UserStore(String name, String role, int balance, int id) {
 		this.name = name;
 		this.role = role;
-		this.wallet = wallet;
+		this.balance = balance;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -34,21 +36,30 @@ public class UserStore implements Serializable{
 		this.role = role;
 	}
 
-	public int getWallet() {
-		return wallet;
+	public int getBalance() {
+		return balance;
 	}
 
-	public void setWallet(int wallet) {
-		this.wallet = wallet;
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + wallet;
+		result = prime * result + balance;
 		return result;
 	}
 
@@ -61,6 +72,8 @@ public class UserStore implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		UserStore other = (UserStore) obj;
+		if (id != other.id)
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -71,14 +84,14 @@ public class UserStore implements Serializable{
 				return false;
 		} else if (!role.equals(other.role))
 			return false;
-		if (wallet != other.wallet)
+		if (balance != other.balance)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "userStore [name=" + name + ", role=" + role + ", wallet=" + wallet + "]";
+		return "UserStore [name=" + name + ", role=" + role + ", balance=" + balance + ", id=" + id + "]";
 	}
 
 }

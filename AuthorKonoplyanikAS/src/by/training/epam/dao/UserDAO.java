@@ -9,6 +9,9 @@ public interface UserDAO {
 	public void createUser(User user) throws DAOException;
 	
 	public String readRole(int roleId) throws DAOException;
-	public int readWallet(int walletId) throws DAOException;
+	public int readBalance(int walletId) throws DAOException;
+	
+	public int readWalletId(int userId) throws DAOException;
+	public void updateWallet(int walletId, int balance) throws DAOException;
 	
 }

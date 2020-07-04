@@ -32,7 +32,7 @@ public class PreAddOrderDrink implements Command {
 			drinks = new ArrayList<DrinkStore>();
 			orderStore.setDrinks(drinks);
 		}
-		int id = drinks.size() + 1; //fix
+		int id = getNextId(drinks);
 		drinkStore.setId(id);
 		drinks.add(drinkStore);
 	}
@@ -51,6 +51,10 @@ public class PreAddOrderDrink implements Command {
 		HttpSession session = request.getSession();
 		DrinkStore drinkStore = (DrinkStore) session.getAttribute(ControllerConstant.DRINK_STORE);
 		return drinkStore;
+	}
+	
+	private int getNextId(List<DrinkStore> list) {
+		return list.get(list.size()).getId() + 1;
 	}
 	
 }

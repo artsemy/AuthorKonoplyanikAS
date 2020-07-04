@@ -466,5 +466,36 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 		return true;
 	}
+	
+	private static final String READ_LAST_ORDER = "select * from `order` where `order-id` = ?";
+	
+	@Override
+	public Order readLastOrder() throws DAOException {
+		Order order = new Order();
+		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.takeConnection();
+			int orderId = getNextId(connection, "`order`", "`order-id`") - 1;
+			PreparedStatement preparedStatement = connection.prepareStatement(READ_LAST_ORDER);
+			preparedStatement.setInt(1, orderId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (!resultSet.next()) {
+				return null;
+			}
+			order.setOrderId(resultSet.getInt(1));
+			order.setUserId(resultSet.getInt(2));
+			order.setDeliveryId(resultSet.getInt(3));
+			order.setPrice(resultSet.getInt(4));
+			order.setStatus(resultSet.getString(5));
+			order.setOpenDate(resultSet.getDate(6));
+			order.setCloseDate(resultSet.getDate(7));
+			connectionPool.closeConnection(connection, preparedStatement, resultSet);
+		} catch (SQLException e) {
+			throw new DAOException("db problem", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("connection pool problem", e);
+		}
+		return order;
+	}
 
 }
