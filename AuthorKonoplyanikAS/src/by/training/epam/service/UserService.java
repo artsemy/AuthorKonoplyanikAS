@@ -9,4 +9,6 @@ public interface UserService {
 	public User readUser(User user) throws ServiceException;
 	public UserStore buildUserStore(User user) throws ServiceException;
 	
+	public int readBalance(int userId) throws ServiceException;
+	
 }

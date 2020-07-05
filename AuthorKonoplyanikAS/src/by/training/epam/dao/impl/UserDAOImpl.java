@@ -22,7 +22,7 @@ public class UserDAOImpl implements UserDAO {
 	private static final String CREATE_USER = "insert into user values(?, ?, ?, ?, ?, ?)";
 	private static final String CREATE_WALLET = "insert into wallet values(?, ?)"; //add
 	
-	private static final String READ_WALLET_ID = "select `wallet-id` from wallet where `user-id` = ?";
+	private static final String READ_WALLET_ID = "select `wallet-id` from user where `user-id` = ?";
 	private static final String UPDATE_WALLET = "update wallet set balance = ? where `wallet-id` = ?";
 	
 	@Override

@@ -34,7 +34,7 @@
   </filter>
   <filter-mapping>
   	<filter-name>FilterMainPage</filter-name>
-  	<url-pattern>/*</url-pattern>
+  	<url-pattern>/jsp/main.jsp</url-pattern>
   </filter-mapping>
   
 </web-app>

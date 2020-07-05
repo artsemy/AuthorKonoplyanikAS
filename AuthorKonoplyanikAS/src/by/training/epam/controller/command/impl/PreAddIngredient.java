@@ -73,7 +73,11 @@ public class PreAddIngredient implements Command{
 	}
 	
 	private int getNextId(List<ExtraStore> list) {
-		return list.get(list.size()).getId() + 1;
+		if (list.isEmpty()) {
+			return 1;
+		} else {
+			return list.get(list.size() - 1).getId() + 1;
+		}
 	}
 
 }

@@ -148,52 +148,70 @@ public class OrderServiceImpl implements OrderService {
 	public OrderStore readLastOrder() {
 		OrderStore orderStore = new OrderStore();
 		try {
-			DAOFactory daoFactory = DAOFactory.getInstance();
-			OrderDAO orderDAO = daoFactory.getOrderDAO();
-			Order order = orderDAO.readLastOrder();
-			orderStore.setOrder(order);
-			Delivery delivery = orderDAO.readDelivery(order.getDeliveryId());
-			orderStore.setDelivery(delivery);
-			List<DrinkStore> drinks = readDrinks(order.getOrderId());
-			orderStore.setDrinks(drinks);
+			setOrder(orderStore);
+			setDelivery(orderStore);
+			setListDrinkStore(orderStore);
 		} catch (DAOException e) {
-			//fix
+			orderStore = null;//fix
 		}
-		
 		return orderStore;
 	}
 	
-	private List<DrinkStore> readDrinks(int orderId) throws DAOException {
-		List<DrinkStore> drinkStores = new ArrayList<DrinkStore>();
+	private void setOrder(OrderStore orderStore) throws DAOException {
 		DAOFactory daoFactory = DAOFactory.getInstance();
 		OrderDAO orderDAO = daoFactory.getOrderDAO();
-		MenuDAO menuDAO = daoFactory.getMenuDAO();
-		List<Drink> drinks = orderDAO.readDrinkByOrder(orderId);
-		for (Drink drink : drinks) {
-			DrinkStore drinkStore = new DrinkStore();
-			drinkStore.setId(drink.getDrinkId());
-			DrinkMenuItem drinkMenuItem = menuDAO.readDrinkMenuItem(drink.getDrinkMenuId());
-			drinkStore.setDrinkMenuItem(drinkMenuItem);
-			List<ExtraStore> extraStores = readExtras(drink.getDrinkId());
-			drinkStore.setExtra(extraStores);
-			drinkStores.add(drinkStore);
-		}
-		return drinkStores;
+		Order order = orderDAO.readLastOrder(); //fix
+		orderStore.setOrder(order);
+		orderStore.setId(order.getOrderId()); // +/-
 	}
 	
-	private List<ExtraStore> readExtras(int drinkId) throws DAOException {
-		List<ExtraStore> extraStores = new ArrayList<ExtraStore>();
+	private void setDelivery(OrderStore orderStore) throws DAOException {
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		OrderDAO orderDAO = daoFactory.getOrderDAO();
+		int deliveryId = orderStore.getOrder().getDeliveryId();
+		Delivery delivery = orderDAO.readDelivery(deliveryId);
+		orderStore.setDelivery(delivery);
+	}
+	
+	private void setListDrinkStore(OrderStore orderStore) throws DAOException {
 		DAOFactory daoFactory = DAOFactory.getInstance();
 		OrderDAO orderDAO = daoFactory.getOrderDAO();
 		MenuDAO menuDAO = daoFactory.getMenuDAO();
+		int orderId = orderStore.getOrder().getOrderId();
+		List<Drink> DrinkIdList = orderDAO.readDrinkByOrder(orderId);
+		for (Drink drink : DrinkIdList) {
+			Drink fullDrink = orderDAO.readDrink(drink.getDrinkId());
+			drink.setDrinkMenuId(fullDrink.getDrinkMenuId());
+		}
+		List<DrinkStore> drinks = new ArrayList<DrinkStore>();
+		for (Drink drink : DrinkIdList) {
+			DrinkStore drinkStore = new DrinkStore();
+			DrinkMenuItem drinkMenuItem = new DrinkMenuItem();
+			drinkMenuItem =	menuDAO.readDrinkMenuItem(drink.getDrinkMenuId());
+			drinkStore.setId(drink.getDrinkId());
+			drinkStore.setDrinkMenuItem(drinkMenuItem);
+			setListExtraStore(drinkStore);
+			drinks.add(drinkStore);
+		}
+		orderStore.setDrinks(drinks);
+	}
+	
+	private void setListExtraStore(DrinkStore drinkStore) throws DAOException {
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		OrderDAO orderDAO = daoFactory.getOrderDAO();
+		MenuDAO menuDAO = daoFactory.getMenuDAO();
+		int drinkId = drinkStore.getId();
 		List<DrinkExtra> drinkExtras = orderDAO.readDrinkIngredient(drinkId);
+		List<ExtraStore> extra = new ArrayList<ExtraStore>();
 		for (DrinkExtra drinkExtra : drinkExtras) {
 			ExtraStore extraStore = new ExtraStore();
+			ExtraMenuItem extraMenuItem = new ExtraMenuItem();
+			extraMenuItem = menuDAO.readExtraMenuItem(drinkExtra.getExtraMenuId());
 			extraStore.setId(drinkExtra.getDrinkExtraId());
-			ExtraMenuItem extraMenuItem = menuDAO.readExtraMenuItem(drinkExtra.getExtraMenuId());
 			extraStore.setExtraMenuItem(extraMenuItem);
-			extraStores.add(extraStore);
+			extra.add(extraStore);
 		}
-		return extraStores;
+		drinkStore.setExtra(extra);
 	}
+	
 }

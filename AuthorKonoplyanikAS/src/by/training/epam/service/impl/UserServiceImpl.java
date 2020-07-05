@@ -61,5 +61,20 @@ public class UserServiceImpl implements UserService{
 		}
 		return userStore;
 	}
+
+	@Override
+	public int readBalance(int userId) throws ServiceException {
+		int balance;
+		DAOFactory daoFactory;
+		try {
+			daoFactory = DAOFactory.getInstance();
+			UserDAO userDAO = daoFactory.getUserDAO();
+			int walletId = userDAO.readWalletId(userId);
+			balance = userDAO.readBalance(walletId);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return balance;
+	}
 	
 }

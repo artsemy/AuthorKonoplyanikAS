@@ -33,12 +33,6 @@ public class OrderDAOImpl implements OrderDAO {
 	private static final String SELECT_ORDER_DRINK = "select * from `order-has-drink` where `order-has-drink-id` = ?";
 	private static final String SELECT_ORDER_DRINK_BY_ORDER = "select * from `order-has-drink` where `order-id` = ?";
 	private static final String SELECT_DELIVERY = "select * from `delivery` where `delivery-id` = ?";
-	
-	private static final String DELETE_DRINK = "delete from `drink` where `drink-id` = ?";
-	private static final String DELETE_DRINK_INGREDIENT = "delete from `drink-has-ingredient` where `drink-has-ingredient` = ?";
-	private static final String DELETE_ORDER = "delete from `order` where `order-id` = ?";
-	private static final String DELETE_ORDER_DRINK = "delete from `order-has-drink` where `order-has-drink-id` = ?";
-	private static final String DELETE_DELIVERY = "delete from `delivery` where `delivery-id` = ?";
 
 	@Override
 	public int createDrink(Drink drink) throws DAOException {
@@ -202,8 +196,7 @@ public class OrderDAOImpl implements OrderDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Drink drink = new Drink();
-				drink.setDrinkId(resultSet.getInt(1));
-				drink.setDrinkMenuId(resultSet.getInt(2));
+				drink.setDrinkId(resultSet.getInt(3));
 				drinks.add(drink);
 			}
 			connectionPool.closeConnection(connection, preparedStatement, resultSet);
@@ -376,96 +369,6 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 		return delivery;
 	}
-
-	@Override
-	public boolean deleteDrink(int drinkId) throws DAOException {
-		try {
-			ConnectionPool connectionPool = ConnectionPool.getInstance();
-			Connection connection = connectionPool.takeConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_DRINK);
-			preparedStatement.setInt(1, drinkId);
-			if (preparedStatement.executeUpdate() == 0) {
-				return false;
-			}
-		} catch (SQLException e) {
-			throw new DAOException("db problem", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("connection pool problem", e);
-		}
-		return true;
-	}
-
-	@Override
-	public boolean deleteDrinkIngredient(int drinkIngredientId) throws DAOException {
-		try {
-			ConnectionPool connectionPool = ConnectionPool.getInstance();
-			Connection connection = connectionPool.takeConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_DRINK_INGREDIENT);
-			preparedStatement.setInt(1, drinkIngredientId);
-			if (preparedStatement.executeUpdate() == 0) {
-				return false;
-			}
-		} catch (SQLException e) {
-			throw new DAOException("db problem", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("connection pool problem", e);
-		}
-		return true;
-	}
-
-	@Override
-	public boolean deleteOrder(int orderId) throws DAOException {
-		try {
-			ConnectionPool connectionPool = ConnectionPool.getInstance();
-			Connection connection = connectionPool.takeConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ORDER);
-			preparedStatement.setInt(1, orderId);
-			if (preparedStatement.executeUpdate() == 0) {
-				return false;
-			}
-		} catch (SQLException e) {
-			throw new DAOException("db problem", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("connection pool problem", e);
-		}
-		return true;
-	}
-
-	@Override
-	public boolean deleteOrderDrink(int orderDrinkId) throws DAOException {
-		try {
-			ConnectionPool connectionPool = ConnectionPool.getInstance();
-			Connection connection = connectionPool.takeConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ORDER_DRINK);
-			preparedStatement.setInt(1, orderDrinkId);
-			if (preparedStatement.executeUpdate() == 0) {
-				return false;
-			}
-		} catch (SQLException e) {
-			throw new DAOException("db problem", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("connection pool problem", e);
-		}
-		return true;
-	}
-
-	@Override
-	public boolean deleteDelivery(int deliveryId) throws DAOException {
-		try {
-			ConnectionPool connectionPool = ConnectionPool.getInstance();
-			Connection connection = connectionPool.takeConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_DELIVERY);
-			preparedStatement.setInt(1, deliveryId);
-			if (preparedStatement.executeUpdate() == 0) {
-				return false;
-			}
-		} catch (SQLException e) {
-			throw new DAOException("db problem", e);
-		} catch (ConnectionPoolException e) {
-			throw new DAOException("connection pool problem", e);
-		}
-		return true;
-	}
 	
 	private static final String READ_LAST_ORDER = "select * from `order` where `order-id` = ?";
 	
@@ -475,7 +378,7 @@ public class OrderDAOImpl implements OrderDAO {
 		try {
 			ConnectionPool connectionPool = ConnectionPool.getInstance();
 			Connection connection = connectionPool.takeConnection();
-			int orderId = getNextId(connection, "`order`", "`order-id`") - 1;
+			int orderId = getNextId(connection, "`order`", "`order-id`") - 1; //fix
 			PreparedStatement preparedStatement = connection.prepareStatement(READ_LAST_ORDER);
 			preparedStatement.setInt(1, orderId);
 			ResultSet resultSet = preparedStatement.executeQuery();

@@ -19,6 +19,7 @@ import by.training.epam.controller.command.Command;
 import by.training.epam.service.OrderService;
 import by.training.epam.service.ServiceException;
 import by.training.epam.service.ServiceFactory;
+import by.training.epam.service.UserService;
 
 public class PushOrder implements Command{
 
@@ -27,7 +28,7 @@ public class PushOrder implements Command{
 		String url;
 		try {
 			saveOrderToDB(request);
-			clearSessionAttribute(request);
+			updateSessionAttribute(request);
 			url = ControllerConstant.MAIN_PAGE;
 		} catch (ServiceException e) {
 			url = ControllerConstant.ERROR_PAGE;
@@ -69,10 +70,15 @@ public class PushOrder implements Command{
 		return res;
 	}
 	
-	private void clearSessionAttribute(HttpServletRequest request) {
+	private void updateSessionAttribute(HttpServletRequest request) throws ServiceException {
 		HttpSession session = request.getSession();
 		session.removeAttribute(ControllerConstant.DRINK_STORE);
 		session.removeAttribute(ControllerConstant.ORDER_STORE);
+		UserStore userStore = (UserStore) session.getAttribute(ControllerConstant.USER_STORE);
+		ServiceFactory serviceFactory = ServiceFactory.getInstance();
+		UserService userService = serviceFactory.getUserService();
+		int balance = userService.readBalance(userStore.getId());
+		userStore.setBalance(balance);
 	}
 	
 }

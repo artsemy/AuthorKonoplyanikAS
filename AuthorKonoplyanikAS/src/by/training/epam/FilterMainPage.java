@@ -19,11 +19,11 @@ public class FilterMainPage implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		addActiveOrderToSession(req);
+		addActiveOrderToRequest(req);
 		chain.doFilter(request, response);
 	}
 	
-	private void addActiveOrderToSession(HttpServletRequest request) {
+	private void addActiveOrderToRequest(HttpServletRequest request) {
 		HttpSession httpSession = request.getSession();
 		if (httpSession.getAttribute(ControllerConstant.USER_STORE) != null) {
 			OrderStore orderStore = readActiveOrder(request);

@@ -37,6 +37,9 @@ public class RemoveDrink implements Command{
 				break;
 			}
 		}
+		if (list.isEmpty()) {
+			orderStore = null;
+		}
 	}
 	
 	private void countPrice(HttpServletRequest request) {

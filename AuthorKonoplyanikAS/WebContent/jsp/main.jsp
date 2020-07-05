@@ -88,7 +88,9 @@
 			</c:forEach>
 			<form action="ServletForJsp" method="get">
 				<input type="hidden" name="command" value="goto_order_page" >
-				<input type="submit" name="order" value="<fmt:message key="label.order" />" >
+				<c:if test="${sessionScope.order_store != null}">
+					<input type="submit" name="order" value="<fmt:message key="label.order" />" >
+				</c:if>
 			</form>
 			<hr>
 			<h2>shipped orders</h2>

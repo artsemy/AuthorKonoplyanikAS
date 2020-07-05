@@ -23,7 +23,7 @@
 		<form action="ServletForJsp" method="get">
 			<input type="hidden" name="command" value="do_nothing">
 			<c:if test="${sessionScope.user_store != null}">
-				<input class="button" type="submit" value="${sessionScope.user_store.wallet}">
+				<input class="button" type="submit" value="${sessionScope.user_store.balance}">
 			</c:if>
 		</form>
 		<div class="clear"></div>
