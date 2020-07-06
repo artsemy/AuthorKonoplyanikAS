@@ -16,6 +16,7 @@ import by.training.epam.controller.command.impl.GotoMainPage;
 import by.training.epam.controller.command.impl.GotoOrderPage;
 import by.training.epam.controller.command.impl.GotoRegistrationPage;
 import by.training.epam.controller.command.impl.GotoSignInPage;
+import by.training.epam.controller.command.impl.GotoUpdateOrderPage;
 import by.training.epam.controller.command.impl.SignIn;
 import by.training.epam.controller.command.impl.SignOut;
 import by.training.epam.controller.command.impl.SignUp;
@@ -38,6 +39,7 @@ public class CommandFactory {
         commands.put(CommandName.GOTO_SIGN_IN_PAGE, new GotoSignInPage());
         commands.put(CommandName.GOTO_REGISTRATION_PAGE, new GotoRegistrationPage());
         commands.put(CommandName.GOTO_ORDER_PAGE, new GotoOrderPage());
+        commands.put(CommandName.GOTO_UPDATE_ORDER_PAGE, new GotoUpdateOrderPage());
         commands.put(CommandName.REMOVE_INGREDIENT, new RemoveIngredient());
         commands.put(CommandName.REMOVE_DRINK, new RemoveDrink());
         commands.put(CommandName.DO_NOTHING, new DoNothing());

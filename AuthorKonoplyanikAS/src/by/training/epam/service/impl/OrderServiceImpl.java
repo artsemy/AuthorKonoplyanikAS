@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
 	private void createIngredient(DrinkExtra drinkIngredient, OrderDAO orderDAO) throws DAOException {
 		int drinkIngredientId = -1;
 		while (drinkIngredientId == -1) {
-			drinkIngredientId = orderDAO.createDrinkIngredient(drinkIngredient);
+			drinkIngredientId = orderDAO.createDrinkExtra(drinkIngredient);
 		}
 	}
 	
@@ -201,7 +201,7 @@ public class OrderServiceImpl implements OrderService {
 		OrderDAO orderDAO = daoFactory.getOrderDAO();
 		MenuDAO menuDAO = daoFactory.getMenuDAO();
 		int drinkId = drinkStore.getId();
-		List<DrinkExtra> drinkExtras = orderDAO.readDrinkIngredient(drinkId);
+		List<DrinkExtra> drinkExtras = orderDAO.readDrinkExtra(drinkId);
 		List<ExtraStore> extra = new ArrayList<ExtraStore>();
 		for (DrinkExtra drinkExtra : drinkExtras) {
 			ExtraStore extraStore = new ExtraStore();

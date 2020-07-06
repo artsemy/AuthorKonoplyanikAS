@@ -27,7 +27,7 @@ public class OrderDAOImpl implements OrderDAO {
 	
 	private static final String SELECT_DRINK = "select * from `drink` where `drink-id` = ?";
 	private static final String SELECT_DRINK_BY_ORDER = "select * from `order-has-drink` where `order-id` = ?";
-	private static final String SELECT_DRINK_INGREDIENT = "select * from `drink-has-ingredient` where `drink-has-ingredient-id` = ?";
+	private static final String SELECT_DRINK_EXTRA_BY_DRINK = "select * from `drink-has-extra` where `drink-id` = ?";
 	private static final String SELECT_ORDER = "select * from `order` where `order-id` = ?";
 	private static final String SELECT_ORDER_BY_USER = "select * from `order` where `user-id` = ?";
 	private static final String SELECT_ORDER_DRINK = "select * from `order-has-drink` where `order-has-drink-id` = ?";
@@ -55,7 +55,7 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 	
 	@Override
-	public int createDrinkIngredient(DrinkExtra drinkExtra) throws DAOException {
+	public int createDrinkExtra(DrinkExtra drinkExtra) throws DAOException {
 		int drinkExtraId = -1;
 		try {
 			ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -209,28 +209,28 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public List<DrinkExtra> readDrinkIngredient(int drinkId) throws DAOException {
+	public List<DrinkExtra> readDrinkExtra(int drinkId) throws DAOException {
 		List<DrinkExtra> ingredients = new ArrayList<DrinkExtra>();
-//		try {
-//			ConnectionPool connectionPool = ConnectionPool.getInstance();
-//			Connection connection = connectionPool.takeConnection();
-//			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DRINK_INGREDIENT);
-//			preparedStatement.setInt(1, drinkId);
-//			ResultSet resultSet = preparedStatement.executeQuery();
-//			while (resultSet.next()) {
-//				DrinkExtra drinkIngredient = new DrinkExtra();
-//				drinkIngredient.setDrinkIngredientId(resultSet.getInt(1));
-//				drinkIngredient.setDrinkId(resultSet.getInt(2));
-//				drinkIngredient.setPortionId(resultSet.getInt(3));
-//				drinkIngredient.setPortionAmount(resultSet.getInt(4));
-//				ingredients.add(drinkIngredient);
-//			}
-//			connectionPool.closeConnection(connection, preparedStatement, resultSet);
-//		}  catch (SQLException e) {
-//			throw new DAOException("db problem", e);
-//		} catch (ConnectionPoolException e) {
-//			throw new DAOException("connection pool problem", e);
-//		}
+		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.takeConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_DRINK_EXTRA_BY_DRINK);
+			preparedStatement.setInt(1, drinkId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				DrinkExtra drinkIngredient = new DrinkExtra();
+				drinkIngredient.setDrinkExtraId(resultSet.getInt(1));
+				drinkIngredient.setDrinkId(resultSet.getInt(2));
+				drinkIngredient.setExtraMenuId(resultSet.getInt(3));
+				drinkIngredient.setStatus(resultSet.getString(4));
+				ingredients.add(drinkIngredient);
+			}
+			connectionPool.closeConnection(connection, preparedStatement, resultSet);
+		}  catch (SQLException e) {
+			throw new DAOException("db problem", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("connection pool problem", e);
+		}
 		return ingredients;
 	}
 

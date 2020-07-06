@@ -94,13 +94,17 @@
 			</form>
 			<hr>
 			<h2>shipped orders</h2>
-			<c:forEach var="drink" items="${requestScope.active_order_store.drinks}">
+			<c:if test="${sessionScope.user_store != null}">
 				<form action="ServletForJsp" method="post">
-					${drink.drinkMenuItem.title}
+					${requestScope.active_order_store.order.closeDate} ${requestScope.active_order_store.order.price}<br/>
+					<c:forEach var="drink" items="${requestScope.active_order_store.drinks}">
+						${drink.drinkMenuItem.title} <br/>
+					</c:forEach>
 					<input type="submit" name="update_order" value="update">
-					<input type="hidden" name="command" value="do_nothing">
+					<input type="hidden" name="command" value="goto_update_order_page">
+					<input type="hidden" name="order_id" value="${requestScope.active_order_store.id}">
 				</form>
-			</c:forEach>
+			</c:if>
 		</div>
 		<div class="clear"></div>
 	</div>

@@ -15,8 +15,9 @@ public class GotoMainPage implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = ControllerConstant.MAIN_PAGE;
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+//		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+//		dispatcher.forward(request, response);
+		response.sendRedirect(url);
 	}
 	
 }

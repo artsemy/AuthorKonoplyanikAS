@@ -17,6 +17,7 @@ public class ControllerConstant {
 	public static final String GOTO_SIGN_IN_PAGE = "goto_sign_in_page";
 	public static final String GOTO_REGISRATION_PAGE = "goto_registration_page";
 	public static final String GOTO_ORDER_PAGE = "goto_order_page";
+	public static final String GOTO_UPDATE_ORDER_PAGE = "goto_update_order_page";
 	public static final String REMOVE_INGREDIENT = "remove_ingredient";
 	public static final String REMOVE_DRINK = "remove_drink";
 	public static final String DO_NOTHING = "do_nothing";
