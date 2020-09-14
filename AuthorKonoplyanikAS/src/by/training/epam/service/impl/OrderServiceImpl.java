@@ -21,6 +21,7 @@ import by.training.epam.dao.MenuDAO;
 import by.training.epam.dao.OrderDAO;
 import by.training.epam.dao.UserDAO;
 import by.training.epam.service.OrderService;
+import by.training.epam.service.ServiceConstant;
 import by.training.epam.service.ServiceException;
 
 public class OrderServiceImpl implements OrderService {
@@ -78,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
 				DrinkExtra drinkExtra = new DrinkExtra();
 				drinkExtra.setDrinkId(drink.getDrinkId());
 				drinkExtra.setExtraMenuId(extraStore.getExtraMenuItem().getExtraMenuId());
-				drinkExtra.setStatus("added"); //fix
+				drinkExtra.setStatus(ServiceConstant.ADDED); //fix
 				createIngredient(drinkExtra, orderDAO);
 			}
 		}
@@ -112,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 		Date date =  new Date(date2.getTime()); //fix
 		order.setOpenDate(date); //fix
 		order.setCloseDate(date); //fix
-		order.setStatus("start"); //fix
+		order.setStatus(ServiceConstant.ADDED); //fix
 		order.setDeliveryId(deliveryId); //fix
 		order.setUserId(1); //fix
 		
@@ -128,7 +129,7 @@ public class OrderServiceImpl implements OrderService {
 		List<DrinkStore> list = orderStore.getDrinks();
 		for (DrinkStore drinkStore : list) {
 			int drinkId = drinkStore.getId();
-			createOrderDrink(orderId, drinkId, "start", orderDAO);
+			createOrderDrink(orderId, drinkId, ServiceConstant.ADDED, orderDAO);
 		}
 	}
 	
@@ -145,73 +146,190 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderStore readLastOrder() {
-		OrderStore orderStore = new OrderStore();
+	public OrderStore readActiveOrder(int userId) throws ServiceException { //fix list need
+		OrderStore orderStore = null;
 		try {
-			setOrder(orderStore);
-			setDelivery(orderStore);
-			setListDrinkStore(orderStore);
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			List<Order> orders = orderDAO.readOrderByUser(userId);
+			for (Order order : orders) {
+				if (order.getStatus().equals(ServiceConstant.ADDED)) {
+					orderStore = buildOrderStore(order.getOrderId());
+				}
+			}
 		} catch (DAOException e) {
-			orderStore = null;//fix
+			throw new ServiceException(e);
 		}
 		return orderStore;
 	}
 	
-	private void setOrder(OrderStore orderStore) throws DAOException {
-		DAOFactory daoFactory = DAOFactory.getInstance();
-		OrderDAO orderDAO = daoFactory.getOrderDAO();
-		Order order = orderDAO.readLastOrder(); //fix
-		orderStore.setOrder(order);
-		orderStore.setId(order.getOrderId()); // +/-
-	}
-	
-	private void setDelivery(OrderStore orderStore) throws DAOException {
-		DAOFactory daoFactory = DAOFactory.getInstance();
-		OrderDAO orderDAO = daoFactory.getOrderDAO();
-		int deliveryId = orderStore.getOrder().getDeliveryId();
-		Delivery delivery = orderDAO.readDelivery(deliveryId);
-		orderStore.setDelivery(delivery);
-	}
-	
-	private void setListDrinkStore(OrderStore orderStore) throws DAOException {
-		DAOFactory daoFactory = DAOFactory.getInstance();
-		OrderDAO orderDAO = daoFactory.getOrderDAO();
-		MenuDAO menuDAO = daoFactory.getMenuDAO();
-		int orderId = orderStore.getOrder().getOrderId();
-		List<Drink> DrinkIdList = orderDAO.readDrinkByOrder(orderId);
-		for (Drink drink : DrinkIdList) {
-			Drink fullDrink = orderDAO.readDrink(drink.getDrinkId());
-			drink.setDrinkMenuId(fullDrink.getDrinkMenuId());
+	public OrderStore buildOrderStore(int orderId) throws ServiceException {
+		OrderStore orderStore = new OrderStore();
+		DAOFactory daoFactory;
+		try {
+			daoFactory = DAOFactory.getInstance();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			
+			Order order = orderDAO.readOrder(orderId);
+			Delivery delivery = orderDAO.readDelivery(order.getDeliveryId());
+			List<DrinkStore> drinks = new ArrayList<DrinkStore>();
+			List<OrderDrink> orderDrinks = orderDAO.readOrderDrinkByOrder(orderId);
+			for (OrderDrink orderDrink : orderDrinks) {
+				if(orderDrink.getStatus().equals(ServiceConstant.ADDED)) {
+					DrinkStore drinkStore = buildDrinkStore(orderDrink.getDrinkId());
+					drinks.add(drinkStore);
+				}
+			}
+			if (drinks.isEmpty()) {
+				orderDAO.updateOrderStatus(orderId, ServiceConstant.REMOVED);
+				return null;
+			}
+			orderStore.setId(order.getOrderId());
+			orderStore.setOrder(order);
+			orderStore.setDelivery(delivery);
+			orderStore.setDrinks(drinks);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
 		}
-		List<DrinkStore> drinks = new ArrayList<DrinkStore>();
-		for (Drink drink : DrinkIdList) {
-			DrinkStore drinkStore = new DrinkStore();
-			DrinkMenuItem drinkMenuItem = new DrinkMenuItem();
-			drinkMenuItem =	menuDAO.readDrinkMenuItem(drink.getDrinkMenuId());
-			drinkStore.setId(drink.getDrinkId());
-			drinkStore.setDrinkMenuItem(drinkMenuItem);
-			setListExtraStore(drinkStore);
-			drinks.add(drinkStore);
+		return orderStore;
+	}
+
+	@Override
+	public void updateOrderRemoveDrinkStatus(int orderId, int drinkId) throws ServiceException {
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			orderDAO.updateOrderDrinkStatusByDrink(drinkId, ServiceConstant.REMOVED);
+			orderDAO.updateDrinkExtraStatusByDrink(drinkId, ServiceConstant.REMOVED);
+			orderDAO.updateOrderStatus(orderId, ServiceConstant.ADDED); //updated status?
+		} catch (DAOException e) {
+			throw new ServiceException(e);
 		}
-		orderStore.setDrinks(drinks);
+	}
+
+	@Override
+	public int countDrinkWithExtraPrice(int drinkId) throws ServiceException {
+		int price = 0;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			MenuDAO menuDAO = daoFactory.getMenuDAO();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			price += countDrinkPrice(orderDAO, menuDAO, drinkId);
+			price += countExtraOfDrinkPrice(orderDAO, menuDAO, drinkId);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return price;
 	}
 	
-	private void setListExtraStore(DrinkStore drinkStore) throws DAOException {
-		DAOFactory daoFactory = DAOFactory.getInstance();
-		OrderDAO orderDAO = daoFactory.getOrderDAO();
-		MenuDAO menuDAO = daoFactory.getMenuDAO();
-		int drinkId = drinkStore.getId();
-		List<DrinkExtra> drinkExtras = orderDAO.readDrinkExtra(drinkId);
-		List<ExtraStore> extra = new ArrayList<ExtraStore>();
+	private int countDrinkPrice(OrderDAO orderDAO, MenuDAO menuDAO, int drinkId) throws DAOException {
+		int price = 0;
+		int drinkMenuId = orderDAO.readDrink(drinkId).getDrinkMenuId();
+		price += menuDAO.readDrinkMenuItem(drinkMenuId).getPrice();
+		return price;
+	}
+	
+	private int countExtraOfDrinkPrice(OrderDAO orderDAO, MenuDAO menuDAO, int drinkId) throws DAOException {
+		int price = 0;
+		List<DrinkExtra> drinkExtras =  orderDAO.readDrinkExtra(drinkId);
 		for (DrinkExtra drinkExtra : drinkExtras) {
-			ExtraStore extraStore = new ExtraStore();
-			ExtraMenuItem extraMenuItem = new ExtraMenuItem();
-			extraMenuItem = menuDAO.readExtraMenuItem(drinkExtra.getExtraMenuId());
-			extraStore.setId(drinkExtra.getDrinkExtraId());
-			extraStore.setExtraMenuItem(extraMenuItem);
-			extra.add(extraStore);
+			if (drinkExtra.getStatus().equals(ServiceConstant.ADDED)) {
+				int extraId = drinkExtra.getExtraMenuId();
+				price += menuDAO.readExtraMenuItem(extraId).getPrice();
+			}
 		}
-		drinkStore.setExtra(extra);
+		return price;
+	}
+
+	@Override
+	public void recountOrderPriceByOrder(int orderId) throws ServiceException {
+		int price = 0;
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			MenuDAO menuDAO = daoFactory.getMenuDAO(); 
+			List<OrderDrink> drinks = orderDAO.readOrderDrinkByOrder(orderId);
+			for (OrderDrink orderDrink : drinks) {
+				if (!orderDrink.getStatus().equals(ServiceConstant.REMOVED)) {
+					int drinkId = orderDrink.getDrinkId();
+					price += countDrinkPrice(orderDAO, menuDAO, drinkId);
+					price += countExtraOfDrinkPrice(orderDAO, menuDAO, drinkId);
+				}
+			}
+			orderDAO.updateOrderPrice(orderId, price);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
+	public DrinkStore buildDrinkStore(int drinkId) throws ServiceException {
+		DrinkStore drinkStore = new DrinkStore();
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			MenuDAO menuDAO = daoFactory.getMenuDAO();
+			Drink drink = orderDAO.readDrink(drinkId);
+			DrinkMenuItem drinkMenuItem = menuDAO.readDrinkMenuItem(drink.getDrinkMenuId());
+			
+			List<ExtraStore> extraStores = new ArrayList<ExtraStore>();
+			List<DrinkExtra> drinkExtras =  orderDAO.readDrinkExtra(drinkId);
+			for (DrinkExtra drinkExtra : drinkExtras) {
+				if (drinkExtra.getStatus().equals(ServiceConstant.ADDED)) {
+					ExtraStore extraStore = buildExtraStore(drinkExtra.getDrinkExtraId());
+					extraStores.add(extraStore);
+				}
+			}
+			
+			drinkStore.setId(drinkId);
+			drinkStore.setDrinkMenuItem(drinkMenuItem);
+			drinkStore.setExtra(extraStores);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return drinkStore;
+	}
+	
+	@Override
+	public ExtraStore buildExtraStore(int drinkExtraId) throws ServiceException {
+		ExtraStore extraStore = new ExtraStore();
+		try {
+			extraStore.setId(drinkExtraId);
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			MenuDAO menuDAO = daoFactory.getMenuDAO();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			DrinkExtra drinkExtra = orderDAO.readDrinkExtraById(drinkExtraId);
+			ExtraMenuItem extraMenuItem = menuDAO.readExtraMenuItem(drinkExtra.getExtraMenuId());
+			extraStore.setExtraMenuItem(extraMenuItem);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		return extraStore;
+	}
+
+	@Override
+	public void updateOrderRemoveExtraStatus(int drinkExtraId) throws ServiceException {
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			orderDAO.updateDrinkExtraStatusById(drinkExtraId, ServiceConstant.REMOVED);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		
+	}
+
+	@Override
+	public void recountOrderPriceByDrink(int drinkId) throws ServiceException {
+		try {
+			DAOFactory daoFactory = DAOFactory.getInstance();
+			OrderDAO orderDAO = daoFactory.getOrderDAO();
+			OrderDrink orderDrink = orderDAO.readOrderDrinkByDrink(drinkId);
+			int orderId = orderDrink.getOrderId();
+			recountOrderPriceByOrder(orderId);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
 	}
 	
 }

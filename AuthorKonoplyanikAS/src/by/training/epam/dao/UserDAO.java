@@ -13,5 +13,6 @@ public interface UserDAO {
 	
 	public int readWalletId(int userId) throws DAOException;
 	public void updateWallet(int walletId, int balance) throws DAOException;
+	public int createWallet() throws DAOException;
 	
 }

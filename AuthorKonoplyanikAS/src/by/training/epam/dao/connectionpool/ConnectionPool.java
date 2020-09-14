@@ -67,7 +67,6 @@ public class ConnectionPool {
 		} catch (SQLException e) {
 			throw new ConnectionPoolException("db problem", e);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 			throw new ConnectionPoolException("driver problem", e);
 		}
 	}
@@ -93,20 +92,22 @@ public class ConnectionPool {
 			rs.close();
 		} catch (SQLException e) {
 			throw new ConnectionPoolException("close problems", e);
+		} finally {
+			closeConnection(con, st);
 		}
-		closeConnection(con, st);
 	}
 	
-	public void closeConnection(Connection con, Statement st) throws ConnectionPoolException {
+	public void closeConnection(Connection con, Statement st) throws ConnectionPoolException { //fix
 		try {
 			st.close();
 		} catch (SQLException e) {
 			throw new ConnectionPoolException("close problems", e);
-		}
-		try {
-			con.close();
-		} catch (SQLException e) {
-			throw new ConnectionPoolException("close problems", e);
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				throw new ConnectionPoolException("close problems", e);
+			}
 		}
 	}
 	

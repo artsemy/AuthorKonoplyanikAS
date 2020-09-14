@@ -6,9 +6,9 @@ import by.training.epam.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
 	
-	UserService userService;
-	OrderService orderService;
-	MenuService menuService;
+	private UserService userService;
+	private OrderService orderService;
+	private MenuService menuService;
 	
 	private static ServiceFactory instance;
 	

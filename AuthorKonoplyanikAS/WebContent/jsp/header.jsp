@@ -6,7 +6,7 @@
 
 <div class="header-bloc">
 	<div class="header-left">
-		<form action="ServletForJsp" method="get">
+		<form action="ServletForAll" method="get">
 			<div>
 				<input type="hidden" name="command" value="goto_main_page">
 				<input type="image" src="../img/logo.png" alt="main">
@@ -14,23 +14,23 @@
 		</form>
 		<div class="space">
 		</div>
-		<form action="ServletForJsp" method="get">
+		<form class="name" action="ServletForAll" method="get">
 			<input type="hidden" name="command" value="do_nothing">
 			<c:if test="${sessionScope.user_store != null}">
-				<input class="button" type="submit" value="${sessionScope.user_store.name}">
+				<input class="button" type="submit" value="<fmt:message key="label.hello" />${sessionScope.user_store.name}">
 			</c:if>
 		</form>
-		<form action="ServletForJsp" method="get">
+		<form class="balance" action="ServletForAll" method="get">
 			<input type="hidden" name="command" value="do_nothing">
 			<c:if test="${sessionScope.user_store != null}">
-				<input class="button" type="submit" value="${sessionScope.user_store.balance}">
+				<input class="button" type="submit" value="${sessionScope.user_store.balance} $">
 			</c:if>
 		</form>
 		<div class="clear"></div>
 	</div>
 	<div class="header-right">
 		<div class="header-locale">
-			<form action="ServletForJsp" method="post">
+			<form action="ServletForAll" method="post">
 				<input type="hidden" name="command" value="locale" >
 				<input type="hidden" name="page_url" value="main.jsp"/>
 				<input type="submit" name="lang_ru" value="<fmt:message key="label.ru" />" />
@@ -39,13 +39,13 @@
 		</div>
 		<div class="header-login">
 			<c:if test="${sessionScope.user_store == null}">
-				<form action="ServletForJsp" method="get">
+				<form action="ServletForAll" method="get">
 					<input type="hidden" name="command" value="goto_sign_in_page">
 					<input type="submit" name="goto_sign_in_page" value="<fmt:message key="label.signIn" />" />
 		   		</form>
 			</c:if>
 			<c:if test="${sessionScope.user_store != null}">
-				<form action="ServletForJsp" method="post">
+				<form action="ServletForAll" method="post">
 					<input type="hidden" name="command" value="sign_out">
 					<input type="submit" name="sign_out" value="<fmt:message key="label.signOut" />" />
 				</form>

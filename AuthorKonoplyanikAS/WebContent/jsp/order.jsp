@@ -15,21 +15,21 @@
 	<br />
 	<div class="bloc">
 		<c:forEach var="drink" items="${sessionScope.order_store.drinks}">
-			<form action="ServletForJsp" method="post">
+			<form action="ServletForAll" method="post">
 				<input type="hidden" name="command" value="remove_drink">
 				<p>
-					${drink.drinkMenuItem.title} ${drink.drinkMenuItem.price}
+					${drink.drinkMenuItem.title} ${drink.drinkMenuItem.price}$
 					<input type="submit" name="remove_drink" value="-">
 					<input type="hidden" name="drink_remove_id" value="${drink.id}">
 				</p>
 				<c:forEach var="ingredient" items="${drink.extra}">
-				<p>${ingredient.extraMenuItem.title} ${ingredient.extraMenuItem.price}</p>
+				<p>${ingredient.extraMenuItem.title} ${ingredient.extraMenuItem.price}$</p>
 				</c:forEach>
 			</form>
 			<br>
 		</c:forEach>
-		<h3>total:${requestScope.price}</h3>
-		<form action="ServletForJsp" method="post">
+		<h3>total:${requestScope.price}$</h3>
+		<form action="ServletForAll" method="post">
 			<h1>delivery</h1>
 			<select name="delivery_type">
 				<option value="1">foot</option>

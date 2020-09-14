@@ -11,17 +11,17 @@
   </welcome-file-list>
   
   <servlet>
-    <servlet-name>ServletForJsp</servlet-name>
-    <servlet-class>by.training.epam.ServletForJsp</servlet-class>
+    <servlet-name>ServletForAll</servlet-name>
+    <servlet-class>by.training.epam.controller.ServletForAll</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ServletForJsp</servlet-name>
-    <url-pattern>/jsp/ServletForJsp</url-pattern>
+    <servlet-name>ServletForAll</servlet-name>
+    <url-pattern>/jsp/ServletForAll</url-pattern>
   </servlet-mapping>
   
   <filter>
   	<filter-name>FilterLocale</filter-name>
-  	<filter-class>by.training.epam.FilterLocale</filter-class>
+  	<filter-class>by.training.epam.controller.FilterLocale</filter-class>
   </filter>
   <filter-mapping>
   	<filter-name>FilterLocale</filter-name>
@@ -30,7 +30,7 @@
   
   <filter>
   	<filter-name>FilterMainPage</filter-name>
-  	<filter-class>by.training.epam.FilterMainPage</filter-class>
+  	<filter-class>by.training.epam.controller.FilterMainPage</filter-class>
   </filter>
   <filter-mapping>
   	<filter-name>FilterMainPage</filter-name>

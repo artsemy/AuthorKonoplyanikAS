@@ -21,10 +21,19 @@ public interface OrderDAO {
 	public List<DrinkExtra> readDrinkExtra(int drinkId) throws DAOException;
 	public Order readOrder(int orderId) throws DAOException;
 	public List<Order> readOrderByUser(int userId) throws DAOException;
-	public OrderDrink readOrderDrink(int orderDrinkId) throws DAOException;
+	public OrderDrink readOrderDrinkById(int orderDrinkId) throws DAOException;
 	public List<OrderDrink> readOrderDrinkByOrder(int orderId) throws DAOException;
 	public Delivery readDelivery(int deliveryId) throws DAOException;
+	public DrinkExtra readDrinkExtraById(int drinkExtraId) throws DAOException;
 	
 	public Order readLastOrder() throws DAOException;
+	public OrderDrink readOrderDrinkByDrink(int drinkId) throws DAOException;
+	
+	public void updateOrderDrinkStatusByDrink(int drinkId, String status) throws DAOException;
+	public void updateDrinkExtraStatusByDrink(int drinkId, String status) throws DAOException;
+	public void updateDrinkExtraStatusById(int drinkExtraId, String status) throws DAOException;
+	public void updateOrderStatus(int orderId, String status) throws DAOException;
+	public void updateOrderPrice(int orderId, int price) throws DAOException;
+
 	
 }

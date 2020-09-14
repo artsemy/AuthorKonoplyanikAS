@@ -6,9 +6,9 @@ import by.training.epam.dao.impl.UserDAOImpl;
 
 public class DAOFactory {
 	
-	UserDAO userDAO;
-	MenuDAO menuDAO;
-	OrderDAO orderDAO;
+	private UserDAO userDAO;
+	private MenuDAO menuDAO;
+	private OrderDAO orderDAO;
 	
 	private static DAOFactory instance;
 	

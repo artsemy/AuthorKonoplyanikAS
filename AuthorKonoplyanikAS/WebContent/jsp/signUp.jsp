@@ -17,7 +17,7 @@
 	<input type="hidden" name="page_url" value="signUp.jsp"/>
 	<br />
 	<div class="bloc">
-		<form action="ServletForJsp" method="post">
+		<form action="ServletForAll" method="post">
 			<input type="hidden" name="command" value="sign_up" />
 			<fmt:message key="label.insertLogin" /> <br />
 			<input type="text" name="login" value="" /> <br />

@@ -20,12 +20,9 @@ public class SignUp implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session =  request.getSession();
-		String login = request.getParameter(ControllerConstant.LOGIN);
-		String password = request.getParameter(ControllerConstant.PASSWORD);
-		String name = request.getParameter(ControllerConstant.NAME);
 		ServiceFactory factory = ServiceFactory.getInstance();
 		UserService service = factory.getUserService();
-		User user = buildUser(login, password, name);
+		User user = readInput(request);
 		boolean successful;
 		try {
 			successful = service.createUser(user);
@@ -35,12 +32,19 @@ public class SignUp implements Command{
 		String url;
 		if (successful) {
 			url = ControllerConstant.MAIN_PAGE;
-			session.setAttribute(ControllerConstant.SA_LOGIN, login);
+			session.setAttribute(ControllerConstant.SA_LOGIN, user.getName());
 		} else {
 			url = ControllerConstant.ERROR_PAGE;
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		response.sendRedirect(url);
+	}
+	
+	private User readInput(HttpServletRequest request) {
+		String login = request.getParameter(ControllerConstant.LOGIN);
+		String password = request.getParameter(ControllerConstant.PASSWORD);
+		String name = request.getParameter(ControllerConstant.NAME);
+		User user = buildUser(login, password, name);
+		return user;
 	}
 	
 	private User buildUser(String login, String password, String name) {
@@ -48,8 +52,8 @@ public class SignUp implements Command{
 		user.setLogin(login);
 		user.setPassword(password);
 		user.setName(name);
-		user.setRoleId(2); //user role
-		user.setWalletId(3); //empty wallet
+//		user.setRoleId(2); //user role
+//		user.setWalletId(3); //empty wallet
 		return user;
 	}
 

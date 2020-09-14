@@ -1,4 +1,4 @@
-package by.training.epam;
+package by.training.epam.controller;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import by.training.epam.bean.OrderStore;
-import by.training.epam.controller.ControllerConstant;
+import by.training.epam.bean.UserStore;
 import by.training.epam.service.OrderService;
+import by.training.epam.service.ServiceException;
 import by.training.epam.service.ServiceFactory;
 
 public class FilterMainPage implements Filter {
@@ -19,11 +20,16 @@ public class FilterMainPage implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		addActiveOrderToRequest(req);
-		chain.doFilter(request, response);
+		try {
+			addActiveOrderToRequest(req);
+		} catch (ServiceException e) {
+			//fix
+		} finally {
+			chain.doFilter(request, response);
+		}
 	}
 	
-	private void addActiveOrderToRequest(HttpServletRequest request) {
+	private void addActiveOrderToRequest(HttpServletRequest request) throws ServiceException {
 		HttpSession httpSession = request.getSession();
 		if (httpSession.getAttribute(ControllerConstant.USER_STORE) != null) {
 			OrderStore orderStore = readActiveOrder(request);
@@ -31,10 +37,12 @@ public class FilterMainPage implements Filter {
 		}
 	}
 	
-	private OrderStore readActiveOrder(HttpServletRequest request) {
+	private OrderStore readActiveOrder(HttpServletRequest request) throws ServiceException {
+		HttpSession httpSession = request.getSession();
+		UserStore userStore = (UserStore) httpSession.getAttribute(ControllerConstant.USER_STORE);
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		OrderService orderService = serviceFactory.getOrderService();
-		OrderStore orderStore = orderService.readLastOrder();
+		OrderStore orderStore = orderService.readActiveOrder(userStore.getId());
 		return orderStore;
 	}
 

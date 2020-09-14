@@ -18,9 +18,12 @@ public class ControllerConstant {
 	public static final String GOTO_REGISRATION_PAGE = "goto_registration_page";
 	public static final String GOTO_ORDER_PAGE = "goto_order_page";
 	public static final String GOTO_UPDATE_ORDER_PAGE = "goto_update_order_page";
+	public static final String GOTO_UPDATE_ORDER_DRINK_PAGE = "goto_update_order_drink_page";
 	public static final String REMOVE_INGREDIENT = "remove_ingredient";
 	public static final String REMOVE_DRINK = "remove_drink";
 	public static final String DO_NOTHING = "do_nothing";
+	public static final String UPDATE_ORDER_REMOVE_DRINK = "update_order_remove_drink";
+	public static final String UPDATE_ORDER_REMOVE_EXTRA = "update_order_remove_extra";
 	//request parameter
 	public static final String PAGE_URL = "page_url";
 	public static final String LANG_RU = "lang_ru";
@@ -37,6 +40,7 @@ public class ControllerConstant {
 	public static final String DRINK_PAGE = "drinkOrder.jsp";
 	public static final String ORDER_PAGE = "order.jsp";
 	public static final String UPDATE_ORDER_PAGE = "updateOrder.jsp";
+	public static final String UPDATE_ORDER_DRINK_PAGE = "updateOrderDrink.jsp";
 	//(session) attribute
 	public static final String SA_LOCALE = "locale";
 	public static final String SA_LOGIN = "login";
@@ -50,6 +54,11 @@ public class ControllerConstant {
 	public static final String DELIVERY_TYPE = "delivery_type";
 	public static final String INGREDIENT_REMOVE_ID = "ingredient_remove_id";
 	public static final String DRINK_REMOVE_ID = "drink_remove_id";
+	public static final String DRINK_ID_TO_REMOVE = "drink_id_to_remove";
+	public static final String EXTRA_ID_TO_REMOVE = "extra_id_to_remove";
+	public static final String ORDER_ID_TO_UPDATE = "order_id_to_update";
+	public static final String DRINK_ID_TO_UPDATE = "drink_id_to_update";
+	public static final String DRINK_STORE_TO_UPDATE = "drink_store_to_update";
 	//attribute value
 	public static final String RU = "ru";
 	public static final String EN = "en";

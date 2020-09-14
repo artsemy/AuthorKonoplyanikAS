@@ -17,7 +17,8 @@
 	<input type="hidden" name="page_url" value="updateOrder.jsp"/>
 	<br />
 	<div class="bloc">
-		${requestScope.active_order_store.order.closeDate} ${requestScope.active_order_store.order.price}
+		<c:if test="${requestScope.active_order_store != null}">
+		${requestScope.active_order_store.order.closeDate} ${requestScope.active_order_store.order.price}$
 		<table>
 			<c:forEach var="drink_store" items="${requestScope.active_order_store.drinks}">
 				<tr>
@@ -28,21 +29,26 @@
 						</c:forEach>
 					</td>
 					<td valign="top">
-						<form action="ServletForJsp" method="post">
+						<form action="ServletForAll" method="post">
 							<input type="submit" value="delete">
-							<input type="hidden" name="command" value="do_nothing">
+							<input type="hidden" name="drink_id_to_remove" value="${drink_store.id}">
+							<input type="hidden" name="order_id_to_update" value="${requestScope.active_order_store.id}">
+							<input type="hidden" name="command" value="update_order_remove_drink">
 						</form>
 					</td>
 					<td valign="top">
-						<form action="ServletForJsp" method="post">
+						<form action="ServletForAll" method="post">
 							<input type="submit" value="update">
-							<input type="hidden" name="command" value="do_nothing">
+							<input type="hidden" name="drink_id_to_update" value="${drink_store.id}">
+							<input type="hidden" name="order_id_to_update" value="${requestScope.active_order_store.id}">
+							<input type="hidden" name="command" value="goto_update_order_drink_page">
 						</form>
 						<br/> <br/>
 					</td>
 				</tr>
 			</c:forEach>
 		</table>
+		</c:if>
 	</div>
 </body>
 </html>

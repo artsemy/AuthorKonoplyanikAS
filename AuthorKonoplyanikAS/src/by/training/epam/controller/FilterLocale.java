@@ -1,4 +1,4 @@
-package by.training.epam;
+package by.training.epam.controller;
 
 import java.io.IOException;
 
@@ -9,8 +9,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import by.training.epam.controller.ControllerConstant;
 
 public class FilterLocale implements Filter {
 

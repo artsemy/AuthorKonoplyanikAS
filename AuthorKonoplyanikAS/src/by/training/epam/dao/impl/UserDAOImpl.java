@@ -20,7 +20,7 @@ public class UserDAOImpl implements UserDAO {
 	private static final String READ_USER_WALLET = "select balance from wallet where `wallet-id` = ?";
 	
 	private static final String CREATE_USER = "insert into user values(?, ?, ?, ?, ?, ?)";
-	private static final String CREATE_WALLET = "insert into wallet values(?, ?)"; //add
+	private static final String CREATE_WALLET = "insert into wallet values(?, ?)";
 	
 	private static final String READ_WALLET_ID = "select `wallet-id` from user where `user-id` = ?";
 	private static final String UPDATE_WALLET = "update wallet set balance = ? where `wallet-id` = ?";
@@ -178,6 +178,29 @@ public class UserDAOImpl implements UserDAO {
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("connection pool problem", e);
 		}
+	}
+
+	@Override
+	public int createWallet() throws DAOException {
+		int walletId = -1; //fix
+		try {
+			ConnectionPool connectionPool = ConnectionPool.getInstance();
+			Connection connection = connectionPool.takeConnection();
+			PreparedStatement statement = connection.prepareStatement(CREATE_WALLET);
+			Statement st = connection.createStatement(); //auto increment
+			ResultSet rs = st.executeQuery("select max(`wallet-id`) from wallet");
+			rs.next();
+			walletId = rs.getInt(1) + 1;
+			statement.setInt(1, walletId);
+			statement.setInt(2, 0);
+			statement.executeUpdate();
+			connectionPool.closeConnection(connection, statement);
+		} catch (SQLException e) {
+			throw new DAOException("db problem", e);
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("connection pool problem", e);
+		}
+		return walletId;
 	}
 		
 }

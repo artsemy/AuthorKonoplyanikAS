@@ -56,7 +56,7 @@ public class MenuServiceImpl implements MenuService{
 	}
 
 	@Override
-	public int countPrice(OrderStore orderStore) {
+	public int countPrice(OrderStore orderStore) { //fix status
 		int price = 0;
 		if (orderStore != null) {
 			List<DrinkStore> drinks = orderStore.getDrinks();
@@ -70,7 +70,7 @@ public class MenuServiceImpl implements MenuService{
 	}
 
 	@Override
-	public int countPrice(DrinkStore drinkStore) {
+	public int countPrice(DrinkStore drinkStore) { //fix status
 		int price = 0;
 		if (drinkStore != null) {
 			price += drinkStore.getDrinkMenuItem().getPrice();

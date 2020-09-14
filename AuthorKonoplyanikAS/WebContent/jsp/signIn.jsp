@@ -17,7 +17,7 @@
 	<input type="hidden" name="page_url2" value="signIn.jsp"/>
 	<br />
 	<div class="bloc">
-		<form action="ServletForJsp" method="post">
+		<form action="ServletForAll" method="post">
 			<input type="hidden" name="command" value="sign_in" />
 			<fmt:message key="label.insertLogin" /> <br />
 			<input type="text" name="login" value="" /> <br />
@@ -26,7 +26,7 @@
 			<input type="submit" name="sign_in" value="<fmt:message key="label.signIn" />" /> <br />
 		</form>
 		<br />
-		<form action="ServletForJsp" method="get">
+		<form action="ServletForAll" method="get">
 			<input type="hidden" name="command" value="goto_registration_page" />
 			<input type="submit" name="goto_registration_page" value="<fmt:message key="label.registration" />" />
 		</form>

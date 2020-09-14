@@ -10,5 +10,7 @@ public interface UserService {
 	public UserStore buildUserStore(User user) throws ServiceException;
 	
 	public int readBalance(int userId) throws ServiceException;
+	public void updateWallet(int userId, int balance) throws ServiceException;
+	public void updateWalletAddMoney(int userId, int money) throws ServiceException;
 	
 }

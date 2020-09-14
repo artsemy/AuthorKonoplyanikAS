@@ -39,7 +39,17 @@
 .header-left .space{
 	height: 100%;
 	float: left;
-	width: 70%;
+	width: 60%;
+}
+
+.header-left .name{
+	float: left;
+	width: 20%;
+}
+
+.header-left .balance{
+	float: left;
+	width: 10%;
 }
 
 .button{

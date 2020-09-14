@@ -20,7 +20,7 @@
 			<table>
 				<tr>
 					<td>
-						<form action="ServletForJsp" method="post">
+						<form action="ServletForAll" method="post">
 							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="1"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
@@ -28,7 +28,7 @@
 						американо
 					</td>
 					<td>
-						<form action="ServletForJsp" method="post">
+						<form action="ServletForAll" method="post">
 							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="2"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
@@ -36,7 +36,7 @@
 						латте
 					</td>
 					<td>
-						<form action="ServletForJsp" method="post">
+						<form action="ServletForAll" method="post">
 							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="3"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
@@ -44,7 +44,7 @@
 						капучино
 					</td>
 					<td>
-						<form action="ServletForJsp" method="post">
+						<form action="ServletForAll" method="post">
 							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="4"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
@@ -54,7 +54,7 @@
 				</tr>
 				<tr>
 					<td>
-						<form action="ServletForJsp" method="post">
+						<form action="ServletForAll" method="post">
 							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="5"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
@@ -62,7 +62,7 @@
 						флэт уайт
 					</td>
 					<td>
-						<form action="ServletForJsp" method="post">
+						<form action="ServletForAll" method="post">
 							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="6"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
@@ -70,7 +70,7 @@
 						лонг блэк
 					</td>
 					<td>
-						<form action="ServletForJsp" method="post">
+						<form action="ServletForAll" method="post">
 							<input type="hidden" name="command" value="add_drink"/>
 							<input type="hidden" name="coffee_id" value="7"/>
 							<input class="menu-item" type="image" src="../img/coffeeCup.png" alt="coffee cup" >
@@ -86,7 +86,7 @@
 			<c:forEach var="item" items="${sessionScope.order_store.drinks}">
 				<p>${item.drinkMenuItem.title}</p>
 			</c:forEach>
-			<form action="ServletForJsp" method="get">
+			<form action="ServletForAll" method="get">
 				<input type="hidden" name="command" value="goto_order_page" >
 				<c:if test="${sessionScope.order_store != null}">
 					<input type="submit" name="order" value="<fmt:message key="label.order" />" >
@@ -95,8 +95,9 @@
 			<hr>
 			<h2>shipped orders</h2>
 			<c:if test="${sessionScope.user_store != null}">
-				<form action="ServletForJsp" method="post">
-					${requestScope.active_order_store.order.closeDate} ${requestScope.active_order_store.order.price}<br/>
+				<c:if test="${requestScope.active_order_store != null}">
+				<form action="ServletForAll" method="post">
+					${requestScope.active_order_store.order.closeDate} ${requestScope.active_order_store.order.price}$<br/>
 					<c:forEach var="drink" items="${requestScope.active_order_store.drinks}">
 						${drink.drinkMenuItem.title} <br/>
 					</c:forEach>
@@ -104,6 +105,7 @@
 					<input type="hidden" name="command" value="goto_update_order_page">
 					<input type="hidden" name="order_id" value="${requestScope.active_order_store.id}">
 				</form>
+				</c:if>
 			</c:if>
 		</div>
 		<div class="clear"></div>
